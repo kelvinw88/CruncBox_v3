@@ -1,25 +1,30 @@
 require './config/environment.rb'
-
+require 'pry'
 describe Post do
 
-  subject(:post_3) {Post.new(status: 'high', content: 'I am so high', updated_at: '2014-08-09 01:45:17 UTC')}
-  let(:post_1) {Post.new(status: 'drunk', content: 'I am so Drunk', updated_at: '2014-08-01 01:45:17 UTC')}
-  let(:post_2) {Post.new(status: 'sober', content: 'I am so sober', updated_at: '2014-08-07 01:45:17 UTC')}
-
-  it "should show all post in order" do
-  Post.all.should == [@post_newest, @post]
+  before(:each) do
+    Post.destroy_all
   end
 
-  it "should show all drunk post in order" do
-  Post.drunk.should == [@post_newest, @post]
+  subject!(:post_1) {FactoryGirl.create :post, status: 'sober', updated_at: 2.days.ago.to_date}
+  let!(:post_2) {FactoryGirl.create :post, status: 'drunk', updated_at: 2.days.ago.to_date}
+  let!(:post_3) {FactoryGirl.create :post, status: 'high', updated_at: 13.days.from_now.to_date}
+  let!(:post_4) {FactoryGirl.create :post, status: 'sober', updated_at: 13.days.from_now.to_date}
+
+  it "should show all alive posts" do
+    Post.alive.should == [post_3,post_4]
   end
 
-  it "should show all sober post in order" do
-  Post.sober.should == [@post_newest, @post]
+  it "should show all drunk posts in order that is still alive" do
+    Post.drunk.should == []
   end
 
-  it "high show all high post in order" do
-  Post.high.should == [@post_newest, @post]
+  it "should show all sober posts in order that is still alive" do
+    Post.sober.should == [post_4]
+  end
+
+  it "high show all high posts in order that is still alive" do
+    Post.high.should == [post_3]
   end
 
 end

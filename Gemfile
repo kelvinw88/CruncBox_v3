@@ -13,8 +13,8 @@ gem 'tux'
 
 gem 'rspec'
 
-gem 'factory_girl'
 gem 'faker'
+gem 'factory_girl'
 
 
 group :development, :test do

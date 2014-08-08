@@ -11,7 +11,13 @@ require 'factory_girl'
 require 'faker'
 
 require './factories/post'
-require './factories/comment'
+require 'rspec'
+require 'rack/test'
+
+RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+  config.include Rack::Test::Methods
+end
 
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 APP_NAME = APP_ROOT.basename.to_s
