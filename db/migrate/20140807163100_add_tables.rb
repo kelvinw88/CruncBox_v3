@@ -9,12 +9,12 @@ class AddTables < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :vote do |t|
+    create_table :votes do |t|
       t.references :post
       t.timestamps
     end
 
-    create_table :comment do |t|
+    create_table :comments do |t|
       t.references :post
       t.string :content
       t.timestamps
