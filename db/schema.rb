@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20140807163100) do
   create_table "posts", force: true do |t|
     t.string   "content"
     t.string   "status"
-    t.boolean  "alive"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -7,6 +7,12 @@ require 'pry'
 require 'sinatra'
 require 'sinatra/activerecord'
 
+require 'factory_girl'
+require 'faker'
+
+require './factories/post'
+require './factories/comment'
+
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 APP_NAME = APP_ROOT.basename.to_s
 

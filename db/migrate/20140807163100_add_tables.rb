@@ -5,7 +5,6 @@ class AddTables < ActiveRecord::Migration
     create_table :posts do |t|
       t.string :content
       t.string :status
-      t.boolean :alive
       t.timestamps
     end
 
