@@ -53,10 +53,10 @@ post '/posts/upvote' do
 end
 
 #Comment
-post '/posts/:post_id/comment' do
+post '/posts/comment' do
   @comment = Comment.new(
-  commnet: params[:comment],
-  post_id: parms[:post_id]
+  content: params[:content],
+  post_id: params[:post_id]
   )
   if @comment.save
     @comment.save
