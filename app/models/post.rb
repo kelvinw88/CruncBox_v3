@@ -6,7 +6,7 @@ class Post < ActiveRecord::Base
   validates :status, presence: true
   validates :content, presence: true, length: { in: 3..144 }
 
-  @life = 30 #in sec
+  @life = 99999990 #in sec
 
 
   scope :drunk, -> {where(status: 'drunk').where('updated_at > ? ', Time.now.utc - @life)}

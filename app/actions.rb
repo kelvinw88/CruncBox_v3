@@ -39,7 +39,7 @@ get '/posts/:id/show' do
 end
 
 #Up vote
-post '/posts/:post_id/upvote' do
+post '/posts/upvote' do
   session[:voted] ||= []
 
   if !(session[:voted].include? params[:post_id])

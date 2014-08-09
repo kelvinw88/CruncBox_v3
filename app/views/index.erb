@@ -1,6 +1,9 @@
 <% @posts.each do |post| %>
 
-  
+  <form method="post" action="/posts/upvote">
+    <input type="hidden" name="post_id" value="<%=post.id%>">
+    <input type="submit" value="Vote">
+  </form>
 
   <p><%= post.status %></p>
   <p><%= post.votes.count %></p>
