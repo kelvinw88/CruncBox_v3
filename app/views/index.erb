@@ -1,8 +1,11 @@
 <% @posts.each do |post| %>
+
+  
+
   <p><%= post.status %></p>
   <p><%= post.votes.count %></p>
   <p><%= post.content %></p>
-  <p><small><%= post.updated_at %></small></p>
+  <p><small><%= post.created_at.strftime("%B %d %Y %r") %></small></p>
 
   <%post.comments.each do |comment| %>
     <p><%=comment%></p>
