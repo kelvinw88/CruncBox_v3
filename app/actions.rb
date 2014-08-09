@@ -25,6 +25,7 @@ post '/posts' do
   content: params[:content],
   )
   if @post
+    @post.save
     redirect '/'
   else
     erb :'posts/new'
