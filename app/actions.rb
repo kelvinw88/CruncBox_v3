@@ -60,7 +60,8 @@ post '/posts/comment' do
   )
   if @comment.save
     @comment.save
-    redirect "/"
+    params[:content] = nil
+    redirect request.referer
   else
     erb :index
   end

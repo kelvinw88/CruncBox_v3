@@ -7,7 +7,7 @@
 
   <p><%= post.status %></p>
   <p><%= post.votes.count %></p>
-  <p><%= post.content %></p>
+  <p><a href="/posts/<%=post.id%>/show"><%= post.content %></a></p>
   <p><small><%= post.created_at.localtime.strftime("%I %M %p %B %d") %></small></p>
   <p>UPDATED AT<small><%= post.updated_at.localtime.strftime("%I %M %p %B %d") %></small></p>
 
@@ -15,13 +15,14 @@
   <form method="post" action="/posts/comment">
     <textarea type="text" name="content" value="<%=post.content%>" maxlength="144"></textarea>
     <input type="hidden" name="post_id" value="<%=post.id%>">
+
     <input type="submit" value="submit">
   </form>
 
 
   <%post.comments.each do |comment| %>
     <p><%=comment.content%></p>
-  <hr/>
+    <hr/>
   <% end %>
   <hr/>
 

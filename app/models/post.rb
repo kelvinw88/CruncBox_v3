@@ -14,6 +14,8 @@ class Post < ActiveRecord::Base
   scope :sober, -> {where(status: 'sober').where('updated_at > ? ', Time.now.utc - @life)}
   scope :alive, -> {order('updated_at DESC').where('updated_at > ? ', Time.now.utc - @life)}
 
+
+
 end
 
 # Time.now.utc - @life
