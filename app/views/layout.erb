@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!--
     normalize.css removes cross-browser differences in defaults, e.g.,
@@ -17,7 +18,64 @@
 
   <title></title>
 </head>
+
 <body>
-  <%= yield %>
+  <h1>
+    <form method="get" action="/alive">
+      <input type="submit" value="Cruncbox"  >
+
+    </form>
+  </h1>
+  <ul>
+
+    <li>
+      <form method="get" action="/drunk">
+        <input type="submit" value="Show Drunk Posts">
+
+      </form>
+    </li>
+    <li>Drunk</li>
+    <li>
+      <form method="get" action="/posts/drunk/new">
+        <input type="submit" value="Make a Drunk Post">
+        <input type="hidden" name="status" value="drunk">
+      </form>
+    </li>
+
+    <li>
+      <form method="get" action="/sober">
+        <input type="submit" value="Show Sober Posts">
+
+      </form>
+    </li>
+    <li>Sober</li>
+    <li>
+      <form method="get" action="/posts/sober/new">
+        <input type="submit" value="Make a Sober Post">
+        <input type="hidden" name="status" value="sober">
+      </form>
+    </li>
+
+    <li>
+      <form method="get" action="/high">
+        <input type="submit" value="Show High Post">
+
+      </form>
+    </li>
+    <li>High</li>
+    <li>
+      <form method="get" action="/posts/high/new">
+        <input type="submit" value="Make a High Post">
+        <input type="hidden" name="status" value="high">
+      </form>
+    </li>
+
+
+
+  </ul>
+
+
+  <%=yield %>
 </body>
+
 </html>

@@ -1,5 +1,11 @@
-<h1> Hello</h1>
 <% @posts.each do |post| %>
+  <p><%= post.status %></p>
+  <p><%= post.votes.count %></p>
   <p><%= post.content %></p>
-  <p><%= post.updated_at %></p>
+  <p><small><%= post.updated_at %></small></p>
+
+  <%post.comments.each do |comment| %>
+    <p><%=comment%></p>
+  <% end %>
+
 <% end %>

@@ -5,15 +5,21 @@ get '/' do
   erb :index
 end
 
+#Sort
+get '/:status' do
+  @posts = Post.send "#{params[:status]}"
+  erb :index
+end
+
 #new message
-get '/post/new/:status' do
+get '/posts/:status/new' do
   @status = params[:status]
   @post = Post.new
-  erb :'post/new'
+  erb :'posts/new'
 end
 
 #Post message
-post '/post' do
+post '/posts' do
   @post = Post.new(
   status: params[:status],
   content: params[:content],
@@ -21,18 +27,18 @@ post '/post' do
   if @post
     redirect '/'
   else
-    erb :'post/new'
+    erb :'posts/new'
   end
 end
 
 #Show message
-get '/post/:id/show' do
+get '/posts/:id/show' do
   @post = Post.find(params[:id])
-  erb :'post/show'
+  erb :'posts/show'
 end
 
 #Up vote
-post '/post/:post_id/upvote' do
+post '/posts/:post_id/upvote' do
   session[:voted] ||= []
 
   if !(session[:voted].include? params[:post_id])
@@ -46,7 +52,7 @@ post '/post/:post_id/upvote' do
 end
 
 #Comment
-post '/post/:post_id/comment' do
+post '/posts/:post_id/comment' do
   @comment = Comment.new(
   commnet: params[:comment],
   post_id: parms[:post_id]
@@ -57,10 +63,4 @@ post '/post/:post_id/comment' do
   else
     erb :index
   end
-end
-
-#Sort
-get '/post/:status' do
-  @posts = Post.send "#{params[:status]}"
-  erb :'/'
 end
