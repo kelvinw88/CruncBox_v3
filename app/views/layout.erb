@@ -41,49 +41,44 @@
       <ul>
         <li>
           <form method="get" action="/drunk">
-            <input type="submit" value="Show Drunk Posts">
+            <input id = "show_drunk" type="submit" value="">
           </form>
           <img class="icon" src="/img/drunk.png">
-          <p>DRUNK</p>
+          <p id="drunk_nav">DRUNK</p>
           <form method="get" action="/posts/drunk/new">
-            <input type="submit" value="Make a Drunk Post">
+            <input id = "post_drunk" type="submit" value="">
             <input type="hidden" name="status" value="drunk">
           </form>
         </li>
 
         <li>
           <form method="get" action="/sober">
-            <input type="submit" value="Show Sober Posts">
+            <input id = "show_sober" type="submit" value="">
           </form>
           <img class="icon" src="/img/sober.png">
-          <p>SOBER</p>
+          <p id="sober_nav" >SOBER</p>
 
           <form method="get" action="/posts/sober/new">
-            <input type="submit" value="Make a Sober Post">
+            <input id = "post_sober" type="submit" value="">
             <input type="hidden" name="status" value="sober">
           </form>
         </li>
 
         <li>
           <form method="get" action="/high">
-            <input type="submit" value="Show High Post">
+            <input id="show_high" type="submit" value="">
           </form>
           <img class="icon" src="/img/high.png">
-          <p>HIGH</p>
+          <p id="high_nav">HIGH</p>
           <form method="get" action="/posts/high/new">
-            <input type="submit" value="Make a High Post">
+            <input id = "post_high" type="submit" value="">
             <input type="hidden" name="status" value="high">
           </form>
         </li>
 
       </ul>
     </nav>
-
   </header>
-
-
-
-
 
   <div class="container">
     <div class="row">
@@ -91,6 +86,10 @@
     </div>
   </div>
 
+  <footer>
+  <div class="addthis_native_toolbox">
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53da6ada22298d73"></script>
+</footer>
 
 </body>
 
