@@ -12,73 +12,86 @@
     application.css is where you put your styles
   -->
   <link rel="stylesheet" href="/stylesheets/application.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascript/application.js"></script>
 
-  <title></title>
+  <title>Cruncbox</title>
 </head>
 
 <body>
 
   <header>
+    <p>
+      <a href="/">
+        <img id="logo" src="/img/logo.png">
+      </a>
+    </p>
+    <nav>
+      <ul>
+        <li>
+          <form method="get" action="/drunk">
+            <input type="submit" value="Show Drunk Posts">
+          </form>
+          <img class="icon" src="/img/drunk.png">
+          <p>DRUNK</p>
+          <form method="get" action="/posts/drunk/new">
+            <input type="submit" value="Make a Drunk Post">
+            <input type="hidden" name="status" value="drunk">
+          </form>
+        </li>
 
-    <h1>
-      <form method="get" action="/alive">
-        <input type="submit" value="Cruncbox"  >
+        <li>
+          <form method="get" action="/sober">
+            <input type="submit" value="Show Sober Posts">
+          </form>
+          <img class="icon" src="/img/sober.png">
+          <p>SOBER</p>
 
-      </form>
-    </h1>
-    <ul>
+          <form method="get" action="/posts/sober/new">
+            <input type="submit" value="Make a Sober Post">
+            <input type="hidden" name="status" value="sober">
+          </form>
+        </li>
 
-      <li>
-        <form method="get" action="/drunk">
-          <input type="submit" value="Show Drunk Posts">
+        <li>
+          <form method="get" action="/high">
+            <input type="submit" value="Show High Post">
+          </form>
+          <img class="icon" src="/img/high.png">
+          <p>HIGH</p>
+          <form method="get" action="/posts/high/new">
+            <input type="submit" value="Make a High Post">
+            <input type="hidden" name="status" value="high">
+          </form>
+        </li>
 
-        </form>
-      </li>
-      <li>Drunk</li>
-      <li>
-        <form method="get" action="/posts/drunk/new">
-          <input type="submit" value="Make a Drunk Post">
-          <input type="hidden" name="status" value="drunk">
-        </form>
-      </li>
-
-      <li>
-        <form method="get" action="/sober">
-          <input type="submit" value="Show Sober Posts">
-
-        </form>
-      </li>
-      <li>Sober</li>
-      <li>
-        <form method="get" action="/posts/sober/new">
-          <input type="submit" value="Make a Sober Post">
-          <input type="hidden" name="status" value="sober">
-        </form>
-      </li>
-
-      <li>
-        <form method="get" action="/high">
-          <input type="submit" value="Show High Post">
-
-        </form>
-      </li>
-      <li>High</li>
-      <li>
-        <form method="get" action="/posts/high/new">
-          <input type="submit" value="Make a High Post">
-          <input type="hidden" name="status" value="high">
-        </form>
-      </li>
-
-    </ul>
+      </ul>
+    </nav>
 
   </header>
 
 
-  <%=yield %>
+
+
+
+  <div class="container">
+    <div class="row">
+      <%=yield%>
+    </div>
+  </div>
+
+
 </body>
 
 </html>

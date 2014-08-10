@@ -1,0 +1,145 @@
+@font-face {
+    font-family: Avenir;
+    src: url('font/AvenirLT55Roman.ttf');
+}
+@font-face {
+    font-family: Avenir;
+    src: url('font/AvenirLT85Heavy.ttf');
+    font-weight:bold;
+}
+
+body{
+  background: -webkit-linear-gradient(230deg, #0E0F18, #1B0025); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(230deg, #0E0F18, #1B0025); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(230deg, #0E0F18, #1B0025); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(230deg, #0E0F18, #1B0025); /* Standard syntax */
+  font-family: Avenir, Helvetica, Arial, Sans-Serif;
+  height:100%;
+}
+
+header{
+  padding-top: 3em;
+  display: table;
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 3em;
+}
+
+#logo{
+  width:300px;
+  height:80px;
+  height:auto;
+  display: block;
+  margin: 0 auto;
+  padding-bottom:1em;
+  margin-bottom: 1.75em;
+  border-bottom-width:0.5em;
+  border-bottom-style:solid;
+  border-bottom-color:rgba(0,0,0,0);
+  transition: border-bottom-color 0.5s ease;
+}
+#logo:hover{
+  width:300px;
+  height:80px;
+  height:auto;
+  display: block;
+  margin: 0 auto;
+  padding-bottom:1em;
+  margin-bottom: 1.75em;
+  border-bottom-width:0.5em;
+  border-bottom-style:solid;
+  border-bottom-color:white;
+}
+
+header nav{
+  padding-bottom:2em;
+}
+header nav ul {
+  margin: 0 auto;
+  padding: 0;
+  display:table;
+  list-style-type: none;
+  text-align: center;
+}
+
+header nav ul li{
+  padding: 0 2em;
+  float:left;
+}
+
+header nav ul li p{
+  padding-top:1em;
+}
+
+.icon{
+  width:40px;
+  height:40px;
+  padding:0;
+  display:block;
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.item{
+  background-color:#E6E7E8;
+  Box-sizing: Border-box;
+  padding:1em;
+  margin:0.5em;
+  border-width:3px;
+  border-style:solid;
+}
+
+  .item img{
+    position:relative;
+    width:100%;
+    display:block;
+  }
+  
+  .drunk{
+    border-color:#f1c40f;
+  }
+
+    .drunk .vote input[type="submit"] {
+      border:none;
+      height:35px;
+      width:35px;
+      background:url(/img/upvote-drunk.png);
+      background-repeat:no-repeat;
+    }
+
+  .sober{
+    border-color:#D41C5B;
+  }
+
+    .SOBER .vote input[type="submit"] {
+      border:none;
+      height:35px;
+      width:35px;
+      background:url(/img/upvote-sober.png);
+      background-repeat:no-repeat;
+    }
+
+  .high{
+    border-color:#01A98B;
+  }
+
+    .high .vote input[type="submit"] {
+      border:none;
+      height:35px;
+      width:35px;
+      background:url(/img/upvote-high.png);
+      background-repeat:no-repeat;
+    }
+
+
+
+
+
+
+
+.col-centered{
+  float:none;
+  margin:0 auto;
+  padding:0 !important;
+}
