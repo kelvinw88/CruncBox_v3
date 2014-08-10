@@ -14,6 +14,15 @@ require './factories/post'
 require 'rspec'
 require 'rack/test'
 
+require 'carrierwave'
+require 'carrierwave/orm/activerecord'
+
+require "sinatra/reloader"
+
+
+
+
+
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Rack::Test::Methods
@@ -31,6 +40,16 @@ configure do
   set :session_secret, ENV['SESSION_KEY'] || 'lighthouselabssecret'
 
   set :views, File.join(Sinatra::Application.root, "app", "views")
+end
+
+CarrierWave.configure do |config|
+  # config.storage = :file
+  # config.root = File.join(APP_ROOT,'public')
+  # config.store_dir = File.join('uploads')
+  config.permissions = 0666
+  config.directory_permissions = 0777
+  config.enable_processing = false
+  config.root = "#{APP_ROOT}/public"
 end
 
 # Set up the database and models

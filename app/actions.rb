@@ -20,12 +20,13 @@ end
 
 #Post message
 post '/posts' do
+
   @post = Post.new(
   status: params[:status],
   content: params[:content],
+  file: params[:uploaded_file]
   )
-  if @post
-    @post.save
+  if @post.save
     redirect '/'
   else
     erb :'posts/new'
@@ -41,7 +42,6 @@ end
 #Up vote
 post '/posts/upvote' do
   session[:voted] ||= []
-
   if !(session[:voted].include? params[:post_id])
     @vote = Vote.create(
     post_id: params[:post_id]
@@ -49,7 +49,6 @@ post '/posts/upvote' do
     session[:voted] << params[:post_id]
   end
   redirect '/'
-
 end
 
 #Comment

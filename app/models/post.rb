@@ -3,10 +3,14 @@ class Post < ActiveRecord::Base
   has_many :votes
   has_many :comments
 
+  mount_uploader :file, Uploader
+
   validates :status, presence: true
   validates :content, presence: true, length: { in: 3..144 }
 
-  @life = 99999990 #in sec
+
+
+  @life = 300 #in sec
 
 
   scope :drunk, -> {where(status: 'drunk').where('updated_at > ? ', Time.now.utc - @life)}

@@ -5,6 +5,7 @@ class AddTables < ActiveRecord::Migration
     create_table :posts do |t|
       t.string :content
       t.string :status
+      t.string :file
       t.timestamps
     end
 

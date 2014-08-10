@@ -10,6 +10,12 @@
   <p><a href="/posts/<%=post.id%>/show"><%= post.content %></a></p>
   <p><small><%= post.created_at.localtime.strftime("%I %M %p %B %d") %></small></p>
   <p>UPDATED AT<small><%= post.updated_at.localtime.strftime("%I %M %p %B %d") %></small></p>
+  <% if post.file.url != "" %>
+    <a href = "/posts/<%=post.id%>/show">
+        <p><img src="<%=post.file.url%>" ></p>
+    </a>
+  <% end %>
+
 
 
   <form method="post" action="/posts/comment">

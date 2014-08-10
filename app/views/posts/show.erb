@@ -9,6 +9,12 @@
 <p><small><%= @post.created_at.localtime.strftime("%I %M %p %B %d") %></small></p>
 <p>UPDATED AT<small><%=@post.updated_at.localtime.strftime("%I %M %p %B %d") %></small></p>
 
+<% if @post.file.url != "" %>
+  <a href = "/posts/<%=@post.id%>/show">
+      <p><img src="<%=@post.file.url%>" ></p>
+  </a>
+<% end %>
+
 
 <form method="post" action="/posts/comment">
   <textarea type="text" name="content" value="<%=@post.content%>" maxlength="144"></textarea>

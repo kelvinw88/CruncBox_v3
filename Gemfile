@@ -1,6 +1,7 @@
 # A sample Gemfile
 source "https://rubygems.org"
 
+
 gem 'rake'
 gem 'activesupport'
 
@@ -10,12 +11,16 @@ gem 'sinatra-activerecord'
 
 gem 'puma'
 gem 'tux'
+gem 'factory_girl'
+gem 'faker'
+gem 'carrierwave'
 
 gem 'rspec'
 
-gem 'faker'
-gem 'factory_girl'
+gem 'bourbon'
+gem 'neat'
 
+gem 'mini_magick'
 
 group :development, :test do
   gem 'pry'
