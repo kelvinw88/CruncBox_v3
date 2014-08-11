@@ -24,7 +24,7 @@
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="/javascript/application.js"></script>
+  <script src="//raw.githubusercontent.com/rnmp/salvattore/master/dist/salvattore.min.js"></script>
 
   <title>Cruncbox</title>
 </head>
@@ -41,25 +41,25 @@
       <ul>
         <li>
           <form method="get" action="/drunk">
-            <input id = "show_drunk" type="submit" value="">
+            <input id="show_drunk" type="submit" value="">
           </form>
           <img class="icon" src="/img/drunk.png">
           <p id="drunk_nav">DRUNK</p>
           <form method="get" action="/posts/drunk/new">
-            <input id = "post_drunk" type="submit" value="">
+            <input id="post_drunk" type="submit" value="">
             <input type="hidden" name="status" value="drunk">
           </form>
         </li>
 
         <li>
           <form method="get" action="/sober">
-            <input id = "show_sober" type="submit" value="">
+            <input id="show_sober" type="submit" value="">
           </form>
           <img class="icon" src="/img/sober.png">
-          <p id="sober_nav" >SOBER</p>
+          <p id="sober_nav">SOBER</p>
 
           <form method="get" action="/posts/sober/new">
-            <input id = "post_sober" type="submit" value="">
+            <input id="post_sober" type="submit" value="">
             <input type="hidden" name="status" value="sober">
           </form>
         </li>
@@ -71,7 +71,7 @@
           <img class="icon" src="/img/high.png">
           <p id="high_nav">HIGH</p>
           <form method="get" action="/posts/high/new">
-            <input id = "post_high" type="submit" value="">
+            <input id="post_high" type="submit" value="">
             <input type="hidden" name="status" value="high">
           </form>
         </li>
@@ -82,15 +82,32 @@
 
   <div class="container">
     <div class="row">
+      
       <%=yield%>
     </div>
   </div>
 
   <footer>
-  <div class="addthis_native_toolbox">
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53da6ada22298d73"></script>
-</footer>
+    <div class="addthis_native_toolbox">
+      <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53da6ada22298d73"></script>
+  </footer>
 
+<script>
+$('textarea').keypress(function(event) {
+if ((event.keyCode || event.which) == 13) {
+    event.preventDefault();;
+    return false;
+  }
+});
+$('textarea').keyup(function() {
+  var keyed = $(this).val().replace(/\n/g, '<br/>');
+
+  $(this).html(keyed);
+
+});
+</script>
+
+</script>
 </body>
 
 </html>
