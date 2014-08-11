@@ -5,6 +5,10 @@ get '/' do
   erb :index
 end
 
+# get '/getip' do
+#   "Your IsP address is #{request.ip}"
+# end
+
 #Sort
 get '/:status' do
   @posts = Post.send "#{params[:status]}"
