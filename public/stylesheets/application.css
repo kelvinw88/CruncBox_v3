@@ -275,8 +275,14 @@ header nav ul li p{
   word-break:break-all;
   color:black !important;
   max-width:950px;
+
 }
 
+  .item p{
+    clear:both;
+    padding:0;
+    margin:0;
+  }
   .item img{
     position:relative;
     width:100%;
@@ -311,7 +317,7 @@ header nav ul li p{
 
   .post_comment input[type="submit"]{
     text-decoration:none;
-  
+
     position: relative;
     float:right;
   }
@@ -364,10 +370,8 @@ header nav ul li p{
 }
 
 .center_wrap{
-
-
-  width:100%;
-  max-width:350px;
+  width:90%;
+  max-width:550px;
   clear:both;
   display:block;
   position:relative;
@@ -376,9 +380,7 @@ header nav ul li p{
   background:none;
   border-width:3px;
   border-style:solid;
-
   padding:10px;
-
 }
 
 .post_box textarea{
@@ -388,11 +390,9 @@ header nav ul li p{
   background:none;
   border:none;
   color: white;
-
-
-
   font-size:1.25em;
 }
+
 textarea ::-webkit-scrollbar {
       width: 1px;
 } /* this targets the default scrollbar (compulsory) */
@@ -412,9 +412,6 @@ textarea ::-webkit-scrollbar-button {
 textarea ::-webkit-scrollbar-corner {
       background-color: rgba(255, 255, 255, 0.1);
 }
-
-
-
 
 .post_box input[type="submit"] {
   float:right;

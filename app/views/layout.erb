@@ -24,8 +24,7 @@
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="//raw.githubusercontent.com/rnmp/salvattore/master/dist/salvattore.min.js"></script>
-
+  <script src="/javascript/masonry.pkgd.min.js"></script>
   <title>Cruncbox</title>
 </head>
 
@@ -82,8 +81,9 @@
 
   <div class="container">
     <div class="row">
-      
-      <%=yield%>
+
+        <%=yield%>
+
     </div>
   </div>
 
@@ -107,7 +107,12 @@ $('textarea').keyup(function() {
 });
 </script>
 
+<script>
+  var container = document.querySelector('.grid');
+  var msnry = new Masonry( container, {
+  });
 </script>
+
 </body>
 
 </html>
