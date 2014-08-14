@@ -271,13 +271,12 @@ header nav ul li p{
   padding:1em;
   margin:0.5em;
   border-width:3px;
-  
   border-style:solid;
   word-break:break-all;
   color:black !important;
-  max-width:950px;
 
 }
+
 
   .item p{
     clear:both;
@@ -306,8 +305,10 @@ header nav ul li p{
   .item .post_vote{
     font-size:0.9em;
     color:#585858;
-    margin-left:1em;
-    padding-left:1em;
+    font-weight:bold;
+
+    float:left;
+    clear:none;
   }
 
   .item .message_box{
@@ -345,7 +346,6 @@ header nav ul li p{
       border:none;
       height:35px;
       width:35px;
-
       background:url(/img/upvote-sober.png);
       background-repeat:no-repeat;
       float:left;

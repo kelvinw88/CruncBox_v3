@@ -1,7 +1,7 @@
 <div class="grid">
   <% @posts.each do |post| %>
     <div class="col-centered col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <div class="item clearfix">
+      <div class="item clearfix <%=post.status%>">
         <form class = "vote" method="post" action="/posts/upvote">
           <input type="hidden" name="post_id" value="<%=post.id%>">
           <input type="submit" value="">

@@ -1,30 +1,32 @@
-<div class="item clearfix">
-  <form class ="vote" method="post" action="/posts/upvote">
-    <input type="hidden" name="post_id" value="<%=@post.id%>">
-    <input type="submit" value="">
-  </form>
+
+  <div class="item clearfix <%=@post.status%>">
+    <form class ="vote" method="post" action="/posts/upvote">
+      <input type="hidden" name="post_id" value="<%=@post.id%>">
+      <input type="submit" value="">
+    </form>
 
 
-  <p class="post_vote"><%= @post.votes.count %></p>
-  <% if @post.file.url != "" %>
-    <a href = "/posts/<%=@post.id%>/show">
-        <p><img src="<%=@post.file.url%>" ></p>
-    </a>
-  <% end %>
-  <p class="post_msg" ><%= @post.content %></p>
+    <p class="post_vote"><%= @post.votes.count %></p>
+    <% if @post.file.url != "" %>
+      <a href = "/posts/<%=@post.id%>/show">
+          <p><img src="<%=@post.file.url%>" ></p>
+      </a>
+    <% end %>
+    <p class="post_msg" ><%= @post.content %></p>
 
-  <p><small><%= @post.created_at.localtime.strftime("%I %M %p %B %d") %></small></p>
+    <p><small><%= @post.created_at.localtime.strftime("%I %M %p %B %d") %></small></p>
 
-  <form class="post_comment" method="post" action="/posts/comment">
-    <textarea class="message_box" type="text" name="content" value="<%=@post.content%>" maxlength="144"></textarea>
-    <input type="hidden" name="post_id" value="<%=@post.id%>">
-    <input type="submit" value="submit">
-  </form>
+    <form class="post_comment" method="post" action="/posts/comment">
+      <textarea class="message_box" type="text" name="content" value="<%=@post.content%>" maxlength="144"></textarea>
+      <input type="hidden" name="post_id" value="<%=@post.id%>">
+      <input type="submit" value="submit">
+    </form>
 
 
-  <%@post.comments.each do |comment| %>
-    <p><%=comment.content%></p>
-    <hr/>
-  <% end %>
+    <%@post.comments.each do |comment| %>
+      <p><%=comment.content%></p>
+      <hr/>
+    <% end %>
 
+  </div>
 </div>

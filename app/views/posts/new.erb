@@ -1,5 +1,5 @@
-<div class="center_wrap">
-  <p> MAKE A <%=@status.upcase%> POST</p>
+<div class="center_wrap <%=@status%> ">
+
 
   <form class= "post_box" method="post" action="/posts" enctype="multipart/form-data">
     <textarea type="text" name="content" value="<%=@post.content%>" maxlength="144"></textarea>
