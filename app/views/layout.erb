@@ -21,7 +21,7 @@
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"> -->
 
   <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascript/masonry.pkgd.min.js"></script>
@@ -102,9 +102,10 @@
         <script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53da6ada22298d73"></script>
     </footer>
   </div>
+<script src="/javascript/application.js"></script>
 
 <script id="post-template" type="text/x-handlebars-template">
-<div class="grid">
+
   {{#posts}}
     <div class="col-centered col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <div class="item clearfix {{status}}">
@@ -112,7 +113,7 @@
           <input type="hidden" name="post_id" value="{{id}}">
           <input type="submit" value="">
         </form>
-        <p class="post_vote">{{votes}}</p>
+        <p class="post_vote">{{votes.length}}</p>
         {{#if file.url}}
           <a href = "/posts/{{id}}/show">
               <p><img src="{{file.url}}" ></p>
@@ -120,18 +121,18 @@
         {{/if}}
         <p><a class="post_msg"href="/posts/{{id}}/show">{{content}}</a></p>
         <p><small>{{created_at}}</small></p>
-        <p>{{comments.content}}</p>
-
-        </div>
-        </div>
+        {{#comments}}
+        <p>{{content}}</p>
+        {{/comments}}
+      </div>
+    </div>
 
 
 
   {{/posts}}
-</div>
 </script>
 
-<script src="/javascript/application.js"></script>
+
 <!-- <script src="/javascript/gradient.js"></script> -->
 
 
