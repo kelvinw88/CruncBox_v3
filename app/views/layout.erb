@@ -15,16 +15,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
   <!-- Optional theme -->
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
   <!-- Latest compiled and minified JavaScript -->
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascript/masonry.pkgd.min.js"></script>
+  <script src="/javascript/handlebars-v1.3.0.js"></script>
   <title>Cruncbox</title>
 </head>
 
@@ -39,7 +40,16 @@
       <nav>
         <ul>
           <li>
-            <form method="get" action="/drunk">
+            <button id="show_drunk" type="submit" value=""></button>
+
+            <img class="icon" src="/img/drunk.png">
+            <p id="drunk_nav">DRUNK</p>
+            <form method="get" action="/posts/drunk/new">
+              <input id="post_drunk" type="submit" value="">
+              <input type="hidden" name="status" value="drunk">
+            </form>
+
+            <!-- <form method="get" action="/drunk">
               <input id="show_drunk" type="submit" value="">
             </form>
             <img class="icon" src="/img/drunk.png">
@@ -47,7 +57,7 @@
             <form method="get" action="/posts/drunk/new">
               <input id="post_drunk" type="submit" value="">
               <input type="hidden" name="status" value="drunk">
-            </form>
+            </form> -->
           </li>
 
           <li>
@@ -81,44 +91,20 @@
 
     <div class="container">
       <div class="row">
-
+        <div class="grid">
           <%=yield%>
-
+        </div>
       </div>
     </div>
 
     <footer>
       <div class="addthis_native_toolbox">
-        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53da6ada22298d73"></script>
+        <script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53da6ada22298d73"></script>
     </footer>
   </div>
 
-<script>
-  $('textarea').keypress(function(event) {
-  if ((event.keyCode || event.which) == 13) {
-      event.preventDefault();;
-      return false;
-    }
-  });
-  $('textarea').keyup(function() {
-    var keyed = $(this).val().replace(/\n/g, '<br/>');
 
-    $(this).html(keyed);
-
-  });
-</script>
-
-<script>
-  $('.grid').masonry({
-    transitionDuration: 0
-  });
-
-  // var container = document.querySelector('.grid');
-  // var msnry = new Masonry( container, {
-  //     transitionDuration: 0
-  // });
-</script>
-
+<script src="/javascript/application.js"></script>
 <script src="/javascript/gradient.js"></script>
 </body>
 

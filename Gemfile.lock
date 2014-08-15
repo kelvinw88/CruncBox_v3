@@ -115,6 +115,7 @@ DEPENDENCIES
   carrierwave
   factory_girl
   faker
+  json
   mini_magick
   neat
   pry

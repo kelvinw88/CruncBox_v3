@@ -1,18 +1,33 @@
 # Homepage (Root path)
 get '/' do
-
   @posts = Post.alive
+  @posts.to_json
   erb :index
 end
 
 # get '/getip' do
-#   "Your IsP address is #{request.ip}"
+  #   "Your IsP address is #{request.ip}"
+# end
+
+# #Sort
+# get '/:status' do
+#   @posts = Post.send "#{params[:status]}"
+#   erb :index
 # end
 
 #Sort
-get '/:status' do
+# get '/:status' do
+#   @posts = Post.send "#{params[:status]}"
+#   @posts.to_json
+#   erb :index
+# end
+
+
+#Sort
+get '/api/:status' do
   @posts = Post.send "#{params[:status]}"
-  erb :index
+  @posts.to_json
+  # erb :index
 end
 
 #new message
