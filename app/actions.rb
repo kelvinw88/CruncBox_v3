@@ -1,7 +1,6 @@
 # Homepage (Root path)
 get '/' do
   @posts = Post.alive
-  @posts.to_json
   erb :index
 end
 
@@ -26,7 +25,8 @@ end
 #Sort
 get '/api/:status' do
   @posts = Post.send "#{params[:status]}"
-  @posts.to_json
+  @posts.to_json(:include => [:votes, :comments])
+
   # erb :index
 end
 

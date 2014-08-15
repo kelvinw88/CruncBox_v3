@@ -31,10 +31,10 @@ $(document).ready(function() {
     var source = $("#post-template").html();
     var template = Handlebars.compile(source);
     var context = {posts: posts};
-    console.log(posts);
     var html = template(context);
     $(".grid").html(html);
   });
+
 
 
   // sort drunk post
