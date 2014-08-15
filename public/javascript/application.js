@@ -15,18 +15,28 @@ $(document).ready(function() {
     transitionDuration: 0
   });
   // index page alive post
+
+  // $.getJSON( "api/alive", function( posts ) {
+  //   var items = [];
+  //   $.each( posts, function( index, post ) {
+  //     items.push( "<li id='" + index + "'>" + post.content + "</li>" );
+  //   });
+  //   $( "<ul/>", {
+  //     "class": "my-new-list",
+  //     html: items.join( "" )
+  //   }).appendTo( ".grid" );
+  // });
+
   $.getJSON( "api/alive", function( posts ) {
-    var items = [];
-    $.each( posts, function( index, post ) {
-      items.push( "<li id='" + index + "'>" + post.content + "</li>" );
-    });
-    $( "<ul/>", {
-      "class": "my-new-list",
-      html: items.join( "" )
-    }).appendTo( "#grid" );
+    var source = $("#post-template").html();
+    var template = Handlebars.compile(source);
+    var context = {posts: posts};
+    console.log(posts);
+    var html = template(context);
+    $(".grid").html(html);
   });
 
-  
+
   // sort drunk post
   $('#show_drunk').on("click", function(){
     $.getJSON( "api/drunk", function( data ) {
