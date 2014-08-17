@@ -21,7 +21,7 @@
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"> -->
 
   <!-- Latest compiled and minified JavaScript -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascript/masonry.pkgd.min.js"></script>
@@ -34,7 +34,7 @@
 
   <header>
     <p>
-      <a href="/">
+      <a>
         <img id="logo" src="/img/logo.png">
       </a>
     </p>
@@ -42,8 +42,8 @@
       <ul>
         <li>
 
-            <input id="show_drunk" type="submit" value="">
-    
+          <input id="show_drunk" type="submit" value="">
+
           <img class="icon" src="/img/drunk.png">
           <p id="drunk_nav">DRUNK</p>
           <form method="get" action="/posts/drunk/new">
@@ -53,9 +53,7 @@
         </li>
 
         <li>
-          <form method="get" action="/sober">
-            <input id="show_sober" type="submit" value="">
-          </form>
+          <input id="show_sober" type="submit" value="">
           <img class="icon" src="/img/sober.png">
           <p id="sober_nav">SOBER</p>
 
@@ -66,9 +64,7 @@
         </li>
 
         <li>
-          <form method="get" action="/high">
-            <input id="show_high" type="submit" value="">
-          </form>
+          <input id="show_high" type="submit" value="">
           <img class="icon" src="/img/high.png">
           <p id="high_nav">HIGH</p>
           <form method="get" action="/posts/high/new">
@@ -84,7 +80,7 @@
   <div class="container">
     <div class="row">
       <div class="grid">
-         <%=yield%>
+        <%=yield%>
       </div>
     </div>
   </div>
@@ -95,17 +91,13 @@
   </footer>
 
 
-</div>
+  </div>
 
-<script src="/javascript/application.js"></script>
-<!-- <script src="/javascript/gradient.js"></script> -->
+  <script src="/javascript/application.js"></script>
+  <script src="/javascript/gradient.js"></script>
 
 
-<script>
-  var container = document.querySelector('.grid');
-  var msnry = new Masonry( container, {
-  });
-</script>
+
 
 
 </body>
