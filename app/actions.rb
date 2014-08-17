@@ -16,8 +16,6 @@ end
 get '/api/:status' do
   @posts = Post.send "#{params[:status]}"
   @posts.to_json(:include => [:votes, :comments])
-
-  # erb :index
 end
 
 #new message

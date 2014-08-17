@@ -1,11 +1,8 @@
 <div class="center_wrap <%=@status%> ">
-
-
   <form class= "post_box" method="post" action="/posts" enctype="multipart/form-data">
     <textarea type="text" name="content" value="<%=@post.content%>" maxlength="144"></textarea>
     <input type="hidden" name="status" value="<%=@status%>">
     <input type="submit" value="SUBMIT">
     <input type="file" name="uploaded_file">
-
   </form>
 </div>

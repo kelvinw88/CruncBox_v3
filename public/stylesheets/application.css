@@ -455,3 +455,15 @@ footer{
   text-align: center;
   clear:both;
 }
+
+.hide_drunk .drunk{
+  display:none;
+}
+
+.hide_sober .sober{
+  display:none;
+}
+
+.hide_high .high{
+  display:none;
+}
