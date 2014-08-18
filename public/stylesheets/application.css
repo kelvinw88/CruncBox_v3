@@ -8,11 +8,13 @@
 
 @font-face {
     font-family: Avenir;
-    src: url('font/AvenirLT55Roman.ttf');
+    src: url('/font/AvenirLT-Roman.eot')format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
 }
 @font-face {
     font-family: Avenir;
-    src: url('font/AvenirLT85Heavy.ttf');
+    src: url('font/AvenirLT-Heavy.eot') format('embedded-opentype');
     font-weight:bold;
 }
 
@@ -374,7 +376,7 @@ header nav ul li p{
   width:90%;
   max-width:550px;
   clear:both;
-  display:block;
+  display:none;
   position:relative;
   text-align: center;
   margin: 0 auto;
@@ -465,5 +467,13 @@ footer{
 }
 
 .hide_high .high{
+  display:none;
+}
+
+.container {
+  margin-top:50px;
+}
+
+.display_none{
   display:none;
 }
