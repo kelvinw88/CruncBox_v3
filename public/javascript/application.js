@@ -45,10 +45,10 @@ $(document).ready(function() {
   };
 
   $.fn.slideFadeToggle  = function(speed, easing, callback) {
-          return this.animate({
-            opacity: 'toggle',
-            height: 'toggle'},
-            speed, easing, callback);
+    return this.animate({
+      opacity: 'toggle',
+      height: 'toggle'},
+      speed, easing, callback);
   };
 
   $.fn.slideFadeUp  = function(speed, easing, callback) {
@@ -58,23 +58,46 @@ $(document).ready(function() {
             speed, easing, callback);
   };
   //homepage
-  $.getJSON( "api/alive", function( posts ) {
-    var source = $("#post-template").html();
-    var template = Handlebars.compile(source);
-    var context = {posts: posts};
-    var html = template(context);
-    $(".grid").html(html);
-    set_masonry_fn()
-    masonry_no_animation_fn();
-    enter_disable_fn();
-  });
 
-  // //cick on logo
-  // $('#logo').on("click", function(){
-  //   var msnry = set_masonry_fn();
-  //   remove_hide_fn();
-  //   msnry.layout();
-  // });
+  var source = $("#post-template").html();
+  var template = Handlebars.compile(source);
+
+  function get_post(){
+    $.getJSON( "api/alive", function( posts ) {
+      var context = {posts: posts};
+      var html = template(context);
+      $(".grid").html(html);
+      // sched_post();
+      set_masonry_fn()
+      masonry_no_animation_fn();
+      enter_disable_fn();
+    });
+  };
+
+  function sched_post() {
+    setTimeout(function() {
+      get_post();
+    }, 5000);
+  }
+
+  function remove_post(){
+
+  };
+
+  function add_post(){
+
+
+  };
+
+  get_post();
+
+
+  //cick on logo
+  $('#logo').on("click", function(){
+    remove_hide_fn();
+    get_post();
+    msnry.layout();
+  });
 
 
   var show_drunk = false;
@@ -90,7 +113,6 @@ $(document).ready(function() {
     }
     msnry.layout();
   });
-
 
   var show_sober = false;
   $('#show_sober').on("click", function(e){
@@ -121,17 +143,12 @@ $(document).ready(function() {
   });
 
   //hide msg box at first
-
-
-
-
   $("#post_drunk").on("click",function(){
       $(".center_wrap.sober").slideUp();
       $(".center_wrap.high").slideUp();
-
       setTimeout(function(){
       $(".center_wrap.drunk").slideFadeToggle()}
-      ,400);
+      ,500);
 
   });
 
@@ -140,7 +157,7 @@ $(document).ready(function() {
     $(".center_wrap.sober").slideUp();
     setTimeout(function(){
     $(".center_wrap.high").slideFadeToggle()}
-    ,400);
+    ,500);
   });
 
   $("#post_sober").on("click",function(){
@@ -148,8 +165,9 @@ $(document).ready(function() {
     $(".center_wrap.high").slideUp();
     setTimeout(function(){
     $(".center_wrap.sober").slideFadeToggle()}
-    ,400);
+    ,500);
   });
+
 
 
 

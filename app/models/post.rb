@@ -10,7 +10,7 @@ class Post < ActiveRecord::Base
 
 
 
-  @life = 999999990 #in sec
+  @life = 99900 #in sec
 
 
   scope :drunk, -> {where(status: 'drunk').where('updated_at > ? ', Time.now.utc - @life)}
