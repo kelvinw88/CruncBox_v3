@@ -77,7 +77,7 @@ $(document).ready(function() {
     });
     var context = {posts: onlyInNew};
     html = template(context);
-    $('.grid').append(html);
+    $('.grid').prepend(html);
 
   };
 
@@ -111,30 +111,30 @@ $(document).ready(function() {
 
   function get_post(){
     $.getJSON( "api/alive", function( posts ) {
-      if (typeof old_posts != 'undefined') {
-        new_posts = posts;
-        add_post();         //NEW POST
-        remove_post();         //REMOVE OLD POST
-        var msnry = set_masonry_fn();        //RESET LAYOUT
-        msnry.layout();
-      } else {
-      old_posts = posts;
+    if (typeof old_posts != 'undefined') {
+      var new_posts = posts;
+      add_post();         //NEW POST
+      remove_post();         //REMOVE OLD POST
+      var msnry = set_masonry_fn();        //RESET LAYOUT
+      msnry.layout();
+    } else {
       var context = {posts: posts};
       html = template(context);
       $(".grid").html(html);
+      sched_post();
+      set_masonry_fn();
+      masonry_no_animation_fn();
+      enter_disable_fn();
     }
+    var old_posts = posts;
 
-    sched_post();
-    set_masonry_fn();
-    masonry_no_animation_fn();
-    enter_disable_fn();
     })
   };
 
   function sched_post() {
     setTimeout(function() {
       get_post();
-    }, 5000);
+    }, 3000);
   }
 
   //doesn't promt error message. can be submited mutiplue times
