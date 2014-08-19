@@ -57,21 +57,78 @@ $(document).ready(function() {
             height: 0},
             speed, easing, callback);
   };
-  //homepage
+
+  function remove_post(){
+    var onlyInOld = old_posts.filter(function(old_post){
+        return new_posts.filter(function(new_post){
+            return new_post.id == old_post.id
+        }).length == 0
+    });
+    for (num in onlyInOld){
+      $(".grid").find("[data-id='" + onlyInOld[num].id + "']").remove();
+    }
+  };
+
+  function add_post(){
+    var onlyInNew = new_posts.filter(function(new_post){
+        return old_posts.filter(function(old_post){
+            return old_post.id == new_post.id
+        }).length == 0
+    });
+    var context = {posts: onlyInNew};
+    html = template(context);
+    $('.grid').append(html);
+
+  };
+
+  function formatAMPM(date) {
+
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    var day = date.getDate();
+    var month = date.getMonth();
+    var monthNames = [ "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December" ];
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm + ' ' + monthNames[month] + ' ' + day;
+    return strTime;
+  }
+
+  Handlebars.registerHelper('fulldate', function(date) {
+    date = new Date(date);
+    return formatAMPM(date);
+  });
+
+
+  //getting posts
 
   var source = $("#post-template").html();
   var template = Handlebars.compile(source);
 
+
   function get_post(){
     $.getJSON( "api/alive", function( posts ) {
+      if (typeof old_posts != 'undefined') {
+        new_posts = posts;
+        add_post();         //NEW POST
+        remove_post();         //REMOVE OLD POST
+        var msnry = set_masonry_fn();        //RESET LAYOUT
+        msnry.layout();
+      } else {
+      old_posts = posts;
       var context = {posts: posts};
-      var html = template(context);
+      html = template(context);
       $(".grid").html(html);
-      // sched_post();
-      set_masonry_fn()
-      masonry_no_animation_fn();
-      enter_disable_fn();
-    });
+    }
+
+    sched_post();
+    set_masonry_fn();
+    masonry_no_animation_fn();
+    enter_disable_fn();
+    })
   };
 
   function sched_post() {
@@ -80,25 +137,27 @@ $(document).ready(function() {
     }, 5000);
   }
 
-  function remove_post(){
+  //doesn't promt error message. can be submited mutiplue times
+  function validateForm() {
+    var x = $('.message_box[name="content"]');
+    if (x >= 4) {
+        alert("Must be Longer than 3 char");
+        return false;
+    }
+  }
 
-  };
-
-  function add_post(){
 
 
-  };
 
+
+  //get post
   get_post();
-
-
   //cick on logo
   $('#logo').on("click", function(){
     remove_hide_fn();
     get_post();
     msnry.layout();
   });
-
 
   var show_drunk = false;
   $('#show_drunk').on("click", function(){
@@ -168,6 +227,10 @@ $(document).ready(function() {
     ,500);
   });
 
+  $(".post_box").find('input[type="submit"]').on("click",function(e){
+    e.preventDefault;
+    console.log("hit");
+  });
 
 
 

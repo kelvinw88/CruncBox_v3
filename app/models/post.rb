@@ -8,21 +8,11 @@ class Post < ActiveRecord::Base
   validates :status, presence: true
   validates :content, presence: true, length: { in: 3..144 }
 
-
-
-  @life = 99900 #in sec
-
+  @life = 30 #in sec
 
   scope :drunk, -> {where(status: 'drunk').where('updated_at > ? ', Time.now.utc - @life)}
   scope :high, -> {where(status: 'high').where('updated_at > ? ', Time.now.utc - @life)}
   scope :sober, -> {where(status: 'sober').where('updated_at > ? ', Time.now.utc - @life)}
   scope :alive, -> {order('updated_at DESC').where('updated_at > ? ', Time.now.utc - @life)}
 
-
-
 end
-
-# Time.now.utc - @life
-# Time.now.utc - @life
-# Time.now.utc - @life
-# Time.now.utc - @life
