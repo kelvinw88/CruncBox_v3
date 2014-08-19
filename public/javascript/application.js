@@ -110,24 +110,26 @@ $(document).ready(function() {
 
 
   function get_post(){
-    $.getJSON( "api/alive", function( posts ) {
-    if (typeof old_posts != 'undefined') {
-      var new_posts = posts;
-      add_post();         //NEW POST
-      remove_post();         //REMOVE OLD POST
-      var msnry = set_masonry_fn();        //RESET LAYOUT
-      msnry.layout();
-    } else {
-      var context = {posts: posts};
-      html = template(context);
-      $(".grid").html(html);
-      sched_post();
-      set_masonry_fn();
-      masonry_no_animation_fn();
-      enter_disable_fn();
-    }
-    var old_posts = posts;
 
+
+    $.getJSON( "api/alive", function( posts ) {
+      if (typeof old_posts != 'undefined') {
+        new_posts = posts;
+        add_post();         //NEW POST
+        remove_post();         //REMOVE OLD POST
+        //removeOldPosts(old_posts)
+        var msnry = set_masonry_fn();        //RESET LAYOUT
+        msnry.layout();
+      } else {
+        var context = {posts: posts};
+        html = template(context);
+        $(".grid").html(html);
+        sched_post();
+        set_masonry_fn();
+        masonry_no_animation_fn();
+        enter_disable_fn();
+      }
+      old_posts = posts;
     })
   };
 
