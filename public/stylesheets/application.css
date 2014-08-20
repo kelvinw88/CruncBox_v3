@@ -448,7 +448,6 @@ footer{
   position: relevant;
   left:0px;
   bottom:0px;
-  margin-top:100px;
 
 }
 .addthis_native_toolbox{
@@ -477,15 +476,4 @@ footer{
 
 .display_none{
   display:none;
-}
-
-.wrapper{
-  margin:0 50px;
-}
-@media only screen
-and (max-width : 979px) {
-  .wrapper{
-    margin:0;
-  }
-
 }

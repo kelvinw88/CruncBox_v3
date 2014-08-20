@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
   function set_masonry_fn(){
     var container = document.querySelector('.grid');
     var msnry = new Masonry(container, {});
@@ -58,7 +57,7 @@ $(document).ready(function() {
             speed, easing, callback);
   };
 
-  function remove_post(){
+  function remove_deleted_posts(old_posts,new_posts){
     var onlyInOld = old_posts.filter(function(old_post){
         return new_posts.filter(function(new_post){
             return new_post.id == old_post.id
@@ -69,7 +68,7 @@ $(document).ready(function() {
     }
   };
 
-  function add_post(){
+  function add_posts(old_posts,new_posts){
     var onlyInNew = new_posts.filter(function(new_post){
         return old_posts.filter(function(old_post){
             return old_post.id == new_post.id
@@ -104,32 +103,27 @@ $(document).ready(function() {
 
 
   //getting posts
-
   var source = $("#post-template").html();
   var template = Handlebars.compile(source);
 
-
   function get_post(){
-
-
     $.getJSON( "api/alive", function( posts ) {
       if (typeof old_posts != 'undefined') {
-        new_posts = posts;
-        add_post();         //NEW POST
-        remove_post();         //REMOVE OLD POST
-        //removeOldPosts(old_posts)
-        var msnry = set_masonry_fn();        //RESET LAYOUT
+        var new_posts = posts;
+        add_posts(old_posts,new_posts);
+        remove_deleted_posts(old_posts,new_posts);
+        var msnry = set_masonry_fn();
         msnry.layout();
       } else {
         var context = {posts: posts};
         html = template(context);
         $(".grid").html(html);
-        sched_post();
         set_masonry_fn();
         masonry_no_animation_fn();
         enter_disable_fn();
       }
-      old_posts = posts;
+      var old_posts = posts;
+      sched_post();
     })
   };
 
@@ -147,10 +141,6 @@ $(document).ready(function() {
         return false;
     }
   }
-
-
-
-
 
   //get post
   get_post();
