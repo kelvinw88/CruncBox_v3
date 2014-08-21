@@ -33,6 +33,7 @@ post '/posts' do
   content: params[:content],
   file: params[:uploaded_file]
   )
+  
   if @post.save
     redirect '/'
   else

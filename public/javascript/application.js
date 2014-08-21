@@ -97,6 +97,11 @@ $(document).ready(function() {
     return strTime;
   }
 
+
+
+
+
+
   Handlebars.registerHelper('fulldate', function(date) {
     date = new Date(date);
     return formatAMPM(date);
@@ -134,17 +139,10 @@ $(document).ready(function() {
   function sched_post() {
     setTimeout(function() {
       get_post();
-    }, 3000);
+    }, 1000);
   }
 
-  //doesn't promt error message. can be submited mutiplue times
-  function validateForm() {
-    var x = $('.message_box[name="content"]');
-    if (x >= 4) {
-        alert("Must be Longer than 3 char");
-        return false;
-    }
-  }
+
 
 
 
@@ -227,10 +225,31 @@ $(document).ready(function() {
     ,500);
   });
 
-  $(".post_box").find('input[type="submit"]').on("click",function(e){
-    e.preventDefault;
-    console.log("hit");
+
+   $(".post_box").on("submit", function(e){
+
+    e.preventDefault();
+
+
+  
+
+
+
+    var data = $(this).serialize()
+    var post_msg = $(this).find('textarea').val().length;
+    if (post_msg >= 2) {
+      $(this).parents("#post_boxes").find(".error_message").hide();
+      $(this).find("textarea").val("");
+      $.post( "/posts", data);
+      $(this).parent().hide();
+      console.log("true");
+    } else {
+      $(this).parents("#post_boxes").find(".error_message").show();
+      console.log("false");
+    }
   });
+
+
 
 
 

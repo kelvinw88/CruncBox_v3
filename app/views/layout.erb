@@ -26,6 +26,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascript/masonry.pkgd.min.js"></script>
   <script src="/javascript/handlebars-v1.3.0.js"></script>
+  <script type="text/javascript" src="../vendor/swfupload/swfupload.js"></script>
+  <script type="text/javascript" src="../src/jquery.swfupload.js"></script>
   <title>Cruncbox</title>
 </head>
 
@@ -80,36 +82,39 @@
     </header>
 
 
+    <section id= "post_boxes">
+      <h3 class="error_message">Be more creative man!</h3>
 
-    <div class="center_wrap drunk ">
-      <form class= "post_box" method="post" action="/posts" enctype="multipart/form-data">
-        <textarea type="text" name="content" value="" maxlength="144"></textarea>
-        <input type="hidden" name="status" value="drunk">
-        <input type="submit" value="SUBMIT">
-        <input type="file" name="uploaded_file">
-      </form>
-    </div>
-
-
-
-    <div class="center_wrap sober ">
-      <form class= "post_box" method="post" action="/posts" enctype="multipart/form-data">
-        <textarea type="text" name="content" value="" maxlength="144"></textarea>
-        <input type="hidden" name="status" value="sober">
-        <input type="submit" value="SUBMIT">
-        <input type="file" name="uploaded_file">
-      </form>
-    </div>
+      <div class="center_wrap drunk ">
+        <form class= "post_box"  method="post" action="/posts" enctype="multipart/form-data" >
+          <textarea type="text" name="content" value="" maxlength="144"></textarea>
+          <input type="hidden" name="status" value="drunk">
+          <input type="file" name="uploaded_file" id="uploaded_file">
+          <input type="submit" value="SUBMIT" id="sub">
+        </form>
+      </div>
 
 
-    <div class="center_wrap high ">
-      <form class= "post_box" method="post" action="/posts" enctype="multipart/form-data">
-        <textarea type="text" name="content" value="" maxlength="144"></textarea>
-        <input type="hidden" name="status" value="high">
-        <input type="submit" value="SUBMIT">
-        <input type="file" name="uploaded_file">
-      </form>
-    </div>
+
+      <div class="center_wrap sober ">
+        <form class= "post_box"  method="post" action="/posts" enctype="multipart/form-data">
+          <textarea type="text" name="content" value="" maxlength="144"></textarea>
+          <input type="hidden" name="status" value="sober">
+          <input type="file" name="uploaded_file" >
+          <input type="submit" value="SUBMIT" >
+        </form>
+      </div>
+
+
+      <div class="center_wrap high ">
+        <form class= "post_box" method="post" action="/posts" enctype="multipart/form-data">
+          <textarea type="text" name="content" value="" maxlength="144"></textarea>
+          <input type="hidden" name="status" value="high">
+          <input type="file" name="uploaded_file" >
+          <input type="submit" value="SUBMIT" >
+        </form>
+      </div>
+    </section>
 
 
 
