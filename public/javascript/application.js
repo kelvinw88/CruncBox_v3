@@ -58,7 +58,7 @@ $(document).ready(function() {
             speed, easing, callback);
   };
 
-  function remove_post(){
+  function remove_post(new_posts,old_posts){
     var onlyInOld = old_posts.filter(function(old_post){
         return new_posts.filter(function(new_post){
             return new_post.id == old_post.id
@@ -69,7 +69,7 @@ $(document).ready(function() {
     }
   };
 
-  function add_post(){
+  function add_post(new_posts,old_posts){
     var onlyInNew = new_posts.filter(function(new_post){
         return old_posts.filter(function(old_post){
             return old_post.id == new_post.id
@@ -107,44 +107,39 @@ $(document).ready(function() {
 
   var source = $("#post-template").html();
   var template = Handlebars.compile(source);
+  var old_posts = "";
 
 
   function get_post(){
     $.getJSON( "api/alive", function( posts ) {
-    if (typeof old_posts != 'undefined') {
+    if (old_posts != "") {
       var new_posts = posts;
-      add_post();         //NEW POST
-      remove_post();         //REMOVE OLD POST
+      add_post(new_posts,old_posts);         //NEW POST
+      remove_post(new_posts,old_posts);         //REMOVE OLD POST
       var msnry = set_masonry_fn();        //RESET LAYOUT
       msnry.layout();
     } else {
       var context = {posts: posts};
       html = template(context);
       $(".grid").html(html);
-      sched_post();
       set_masonry_fn();
       masonry_no_animation_fn();
       enter_disable_fn();
     }
-    var old_posts = posts;
 
+    old_posts = posts;
+    sched_post();
     })
   };
 
   function sched_post() {
     setTimeout(function() {
       get_post();
-    }, 1000);
+    }, 3000);
   }
-
-
-
-
-
-
-
   //get post
   get_post();
+
   //cick on logo
   $('#logo').on("click", function(){
     remove_hide_fn();
@@ -223,12 +218,10 @@ $(document).ready(function() {
   var files = [];
   var content = null;
 
-
-
-
   $(function(){
 
-    $("#uploaded_file").change(function(event) {
+    $(".uploaded_file").change(function(event) {
+
       $.each(event.target.files, function(index, file) {
         var reader = new FileReader();
         reader.onload = function(event) {
@@ -241,77 +234,46 @@ $(document).ready(function() {
       });
     });
 
+
+
     $(".post_box").submit(function(form) {
       var file_type = this.uploaded_file.value.split(".")[1];
       form.preventDefault();
       content = this;
       var data = $(this).serialize()
       var post_msg = $(this).find('textarea').val().length;
-
       var no_attachment = typeof file_type == 'undefined';
-
-
       if (post_msg < 3){
-        console.log ("2");
         $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").show();
         $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").fadeOut(3000);
       } else if (no_attachment && post_msg > 2){
+
         $(this).parents("#post_boxes").find(".error_message").hide();
         $(this).find("textarea").val("");
         $.post( "/posts", data);
         $(this).parent().hide();
+        console.log("without photo");
       } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
-          $.each(files, function(index, file) {
-            $.ajax({url: "/posts",
-              type: 'POST',
-              data: {
-                filename: file.filename,
-                data: file.data,
-                content: content.content.value,
-                status: content.status.value}
-            });
+
+        $.each(files, function(index, file) {
+          $.ajax({url: "/posts",
+            type: 'POST',
+            data: {
+              filename: file.filename,
+              data: file.data,
+              content: content.content.value,
+              status: content.status.value}
           });
-          files = [];
-          content.content.value = "";
-          content.uploaded_file.value = "";
-          $(content).parent().hide();
+        });
+        files = [];
+        content.content.value = "";
+        content.uploaded_file.value = "";
+        $(content).parent().hide();
+        console.log("with photo");
       } else {
-        console.log ("4");
         $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").show();
         $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").fadeOut(3000);
       }
-
-
-      // if ( no_attachment || (!!(["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) >= 0)) ) {
-      //   if (!(jQuery.isEmptyObject(files))&&(post_msg > 2))  {
-      //     $.each(files, function(index, file) {
-      //       $.ajax({url: "/posts",
-      //         type: 'POST',
-      //         data: {
-      //           filename: file.filename,
-      //           data: file.data,
-      //           content: content.content.value,
-      //           status: content.status.value}
-      //       });
-      //     });
-      //     files = [];
-      //     content.content.value = "";
-      //     content.uploaded_file.value = "";
-      //     $(content).parent().hide();
-      //
-      //   }
-      //   else if (post_msg > 2) {
-          // $(this).parents("#post_boxes").find(".error_message").hide();
-          // $(this).find("textarea").val("");
-          // $.post( "/posts", data);
-          // $(this).parent().hide();
-      //   }
-      //   else {
-      //     $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!");
-      //   }
-      // } else {
-      //   $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.");
-      // }
     });
   });
 

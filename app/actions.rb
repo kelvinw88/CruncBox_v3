@@ -30,7 +30,6 @@ end
 #Post message
 post '/posts' do
 
-
   if params[:data] != nil
     data = params[:data]
     filename = params[:filename]
@@ -44,6 +43,7 @@ post '/posts' do
     file = File.new("public/uploads/posts_img/#{filename}", "w+")
     file.write(decoded_image)
   end
+
 
 
   @post = Post.new(
