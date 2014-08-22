@@ -97,11 +97,6 @@ $(document).ready(function() {
     return strTime;
   }
 
-
-
-
-
-
   Handlebars.registerHelper('fulldate', function(date) {
     date = new Date(date);
     return formatAMPM(date);
@@ -230,21 +225,20 @@ $(document).ready(function() {
 
 
 
+
   $(function(){
 
     $("#uploaded_file").change(function(event) {
-
-        $.each(event.target.files, function(index, file) {
-          var reader = new FileReader();
-          reader.onload = function(event) {
-            object = {};
-            object.filename = file.name;
-            object.data = event.target.result;
-            files.push(object);
-          };
-          reader.readAsDataURL(file);
-        });
-
+      $.each(event.target.files, function(index, file) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          object = {};
+          object.filename = file.name;
+          object.data = event.target.result;
+          files.push(object);
+        };
+        reader.readAsDataURL(file);
+      });
     });
 
     $(".post_box").submit(function(form) {
@@ -254,42 +248,71 @@ $(document).ready(function() {
       var data = $(this).serialize()
       var post_msg = $(this).find('textarea').val().length;
 
-      if ( (typeof file_type == 'undefined') || (["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) >= 0) ) {
-        if (!(jQuery.isEmptyObject(files))&&(post_msg > 2))  {
-          debugger
+      var no_attachment = typeof file_type == 'undefined';
+
+
+      if (post_msg < 3){
+        console.log ("2");
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").show();
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").fadeOut(3000);
+      } else if (no_attachment && post_msg > 2){
+        $(this).parents("#post_boxes").find(".error_message").hide();
+        $(this).find("textarea").val("");
+        $.post( "/posts", data);
+        $(this).parent().hide();
+      } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
           $.each(files, function(index, file) {
             $.ajax({url: "/posts",
-                  type: 'POST',
-                  data: {
-                    filename: file.filename,
-                    data: file.data,
-                    content: content.content.value,
-                    status: content.status.value}
+              type: 'POST',
+              data: {
+                filename: file.filename,
+                data: file.data,
+                content: content.content.value,
+                status: content.status.value}
             });
-
-            files = [];
-            content.content.value = "";
-            conten.uploaded_file.value = ""
-
           });
+          files = [];
+          content.content.value = "";
+          content.uploaded_file.value = "";
           $(content).parent().hide();
-        } else if (post_msg >  2) {
-          $(this).parents("#post_boxes").find(".error_message").hide();
-          $(this).find("textarea").val("");
-          $.post( "/posts", data);
-          $(this).parent().hide();
-
-        } else {
-          $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!");
-        }
-        files = [];
-        form.preventDefault();
       } else {
-        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.");
-
+        console.log ("4");
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").show();
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").fadeOut(3000);
       }
-    });
 
+
+      // if ( no_attachment || (!!(["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) >= 0)) ) {
+      //   if (!(jQuery.isEmptyObject(files))&&(post_msg > 2))  {
+      //     $.each(files, function(index, file) {
+      //       $.ajax({url: "/posts",
+      //         type: 'POST',
+      //         data: {
+      //           filename: file.filename,
+      //           data: file.data,
+      //           content: content.content.value,
+      //           status: content.status.value}
+      //       });
+      //     });
+      //     files = [];
+      //     content.content.value = "";
+      //     content.uploaded_file.value = "";
+      //     $(content).parent().hide();
+      //
+      //   }
+      //   else if (post_msg > 2) {
+          // $(this).parents("#post_boxes").find(".error_message").hide();
+          // $(this).find("textarea").val("");
+          // $.post( "/posts", data);
+          // $(this).parent().hide();
+      //   }
+      //   else {
+      //     $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!");
+      //   }
+      // } else {
+      //   $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.");
+      // }
+    });
   });
 
 
