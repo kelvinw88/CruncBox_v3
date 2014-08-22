@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
   function set_masonry_fn(){
     var container = document.querySelector('.grid');
     var msnry = new Masonry(container, {});
@@ -16,9 +15,9 @@ $(document).ready(function() {
   function enter_disable_fn(){
     $('textarea').keypress(function(event) {
     if ((event.keyCode || event.which) == 13) {
-        event.preventDefault();;
-        return false;
-      }
+      event.preventDefault();;
+      return false;
+    }
     });
     $('textarea').keyup(function() {
       var keyed = $(this).val().replace(/\n/g, '<br/>');
@@ -52,27 +51,16 @@ $(document).ready(function() {
   };
 
   $.fn.slideFadeUp  = function(speed, easing, callback) {
-          return this.animate({
-            opacity: 'toggle',
-            height: 0},
-            speed, easing, callback);
-  };
-
-  function remove_post(new_posts,old_posts){
-    var onlyInOld = old_posts.filter(function(old_post){
-        return new_posts.filter(function(new_post){
-            return new_post.id == old_post.id
-        }).length == 0
-    });
-    for (num in onlyInOld){
-      $(".grid").find("[data-id='" + onlyInOld[num].id + "']").remove();
-    }
+    return this.animate({
+      opacity: 'toggle',
+      height: 0},
+      speed, easing, callback);
   };
 
   function add_post(new_posts,old_posts){
     var onlyInNew = new_posts.filter(function(new_post){
         return old_posts.filter(function(old_post){
-            return old_post.id == new_post.id
+            return old_post.id == new_post.id && old_post.updated_at == new_post.updated_at
         }).length == 0
     });
     var context = {posts: onlyInNew};
@@ -81,8 +69,20 @@ $(document).ready(function() {
 
   };
 
-  function formatAMPM(date) {
+  function remove_post(new_posts,old_posts){
+    var onlyInOld = old_posts.filter(function(old_post){
+        return new_posts.filter(function(new_post){
+            return new_post.id == old_post.id && old_post.updated_at == new_post.updated_at
+        }).length == 0
+    });
+    for (num in onlyInOld){
+      $(".grid").find("[data-id='" + onlyInOld[num].id + "']").remove();
+    }
+  };
 
+
+
+  function formatAMPM(date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -108,14 +108,15 @@ $(document).ready(function() {
   var source = $("#post-template").html();
   var template = Handlebars.compile(source);
   var old_posts = "";
+  var new_posts = "";
 
 
   function get_post(){
     $.getJSON( "api/alive", function( posts ) {
     if (old_posts != "") {
-      var new_posts = posts;
-      add_post(new_posts,old_posts);         //NEW POST
+      new_posts = posts;
       remove_post(new_posts,old_posts);         //REMOVE OLD POST
+      add_post(new_posts,old_posts);         //NEW POST
       var msnry = set_masonry_fn();        //RESET LAYOUT
       msnry.layout();
     } else {
@@ -135,7 +136,7 @@ $(document).ready(function() {
   function sched_post() {
     setTimeout(function() {
       get_post();
-    }, 3000);
+    }, 1000);
   }
   //get post
   get_post();
@@ -215,11 +216,13 @@ $(document).ready(function() {
     ,500);
   });
 
+
+  //POSTING
+
   var files = [];
   var content = null;
 
   $(function(){
-
     $(".uploaded_file").change(function(event) {
 
       $.each(event.target.files, function(index, file) {
@@ -234,8 +237,6 @@ $(document).ready(function() {
       });
     });
 
-
-
     $(".post_box").submit(function(form) {
       var file_type = this.uploaded_file.value.split(".")[1];
       form.preventDefault();
@@ -246,13 +247,14 @@ $(document).ready(function() {
       if (post_msg < 3){
         $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").show();
         $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").fadeOut(3000);
-      } else if (no_attachment && post_msg > 2){
 
+      } else if (no_attachment && post_msg > 2){
         $(this).parents("#post_boxes").find(".error_message").hide();
         $(this).find("textarea").val("");
         $.post( "/posts", data);
         $(this).parent().hide();
         console.log("without photo");
+
       } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
 
         $.each(files, function(index, file) {
@@ -271,13 +273,26 @@ $(document).ready(function() {
         $(content).parent().hide();
         console.log("with photo");
       } else {
-        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").show();
-        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").fadeOut(3000);
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").show().fadeOut(3000);
       }
     });
   });
 
+  //VOTES
+  $(".container").on("submit", ".vote", function(event){
+    event.preventDefault();
+    var data = $(this).serialize();
+    $.post( '/posts/upvote', data);
+  });
 
+  //COMMENTS
+  $(".container").on("submit", ".post_comment", function(event){
+    event.preventDefault();
+    var data = $(this).serialize();
+    $.post( '/posts/comment',data , function(json){
+      alert(json);
+    });
+  });
 
 
 

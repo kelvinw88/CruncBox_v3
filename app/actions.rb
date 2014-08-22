@@ -6,13 +6,6 @@ get '/' do
   erb :index
 end
 
-#Sort
-# get '/:status' do
-#   @posts = Post.send "#{params[:status]}"
-#   @posts.to_json
-#   erb :index
-# end
-
 
 #Sort
 get '/api/:status' do
@@ -44,15 +37,11 @@ post '/posts' do
     file.write(decoded_image)
   end
 
-
-
   @post = Post.new(
   status: params[:status],
   content: params[:content],
   filename: params[:filename]
   )
-
-
 
   if @post.save
     @post.save
@@ -89,7 +78,7 @@ post '/posts/comment' do
   if @comment.save
     @comment.save
     params[:content] = nil
-    redirect request.referer
+    @comment.to_json
   else
     erb :index
   end
