@@ -1,4 +1,6 @@
+require 'pry'
 # Homepage (Root path)
+
 get '/' do
   @posts = Post.alive
   erb :index
@@ -28,14 +30,29 @@ end
 #Post message
 post '/posts' do
 
+    data = params[:data]
+    filename = params[:filename]
+
+    ## Decode the image
+    data_index = data.index('base64') + 7
+    filedata = data.slice(data_index, data.length)
+    decoded_image = Base64.decode64(filedata)
+
+    ## Write the file to the system
+    file = File.new("public/uploads/#{filename}", "w+")
+    file.write(decoded_image)
+
+
+
+
   @post = Post.new(
   status: params[:status],
   content: params[:content],
   file: params[:uploaded_file]
   )
-  
+
   if @post.save
-    redirect '/'
+    "/uploads/#{filename}"
   else
     erb :'posts/new'
   end

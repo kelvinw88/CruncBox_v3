@@ -225,29 +225,75 @@ $(document).ready(function() {
     ,500);
   });
 
+  var files = [];
+  var content = null;
 
-   $(".post_box").on("submit", function(e){
-
-    e.preventDefault();
-
-
-  
-
-
-
-    var data = $(this).serialize()
-    var post_msg = $(this).find('textarea').val().length;
-    if (post_msg >= 2) {
-      $(this).parents("#post_boxes").find(".error_message").hide();
-      $(this).find("textarea").val("");
-      $.post( "/posts", data);
-      $(this).parent().hide();
-      console.log("true");
+  function uploadHandler(path, status, xhr) {
+    var file_parts = path.split(".");
+    var extension = file_parts[file_parts.length - 1];
+    if(["jpg", "png", "gif"].indexOf(extension.toLowerCase()) >= 0) {
+      $("#post_boxes").append("<img src='" + path + "' />");
     } else {
-      $(this).parents("#post_boxes").find(".error_message").show();
-      console.log("false");
+      $("#post_boxes").append("<a href='" + path + "' target='_blank'>" + path + "</a>");
     }
+  }
+
+  $(function(){
+
+    $("#uploaded_file").change(function(event) {
+
+        $.each(event.target.files, function(index, file) {
+          var reader = new FileReader();
+          reader.onload = function(event) {
+            object = {};
+            object.filename = file.name;
+            object.data = event.target.result;
+            files.push(object);
+          };
+          reader.readAsDataURL(file);
+        });
+
+    });
+
+    $(".post_box").submit(function(form) {
+      var file_type = this.uploaded_file.value.split(".")[1];
+      form.preventDefault();
+      content = this;
+      var data = $(this).serialize()
+      var post_msg = $(this).find('textarea').val().length;
+
+      if ( (typeof file_type == 'undefined') || (["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) >= 0) ) {
+        if (!(jQuery.isEmptyObject(files))&&(post_msg > 2))  {
+          $.each(files, function(index, file) {
+            $.ajax({url: "/posts",
+                  type: 'POST',
+                  data: {
+                    filename: file.filename,
+                    data: file.data,
+                    content: content.content.value,
+                    status: content.status.value},
+                  success: uploadHandler
+            });
+          });
+          $(content).parent().hide();
+        } else if (post_msg >  2) {
+          $(this).parents("#post_boxes").find(".error_message").hide();
+          $(this).find("textarea").val("");
+          $.post( "/posts", data);
+          $(this).parent().hide();
+        } else {
+          $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!");
+        }
+        files = [];
+        form.preventDefault();
+      } else {
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.");
+
+      }
+    });
+
   });
+
 
 
 
