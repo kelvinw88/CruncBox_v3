@@ -212,6 +212,9 @@ $(document).ready(function() {
   $("#post_high").on("click",function(){
     $(".center_wrap.drunk").slideUp();
     $(".center_wrap.sober").slideUp();
+    if ($('.error_message').is(':visible')){
+      $('.error_message').slideUp();
+    }
     setTimeout(function(){
     $(".center_wrap.high").slideFadeToggle()}
     ,500);
@@ -225,18 +228,9 @@ $(document).ready(function() {
     ,500);
   });
 
+
   var files = [];
   var content = null;
-
-  function uploadHandler(path, status, xhr) {
-    var file_parts = path.split(".");
-    var extension = file_parts[file_parts.length - 1];
-    if(["jpg", "png", "gif"].indexOf(extension.toLowerCase()) >= 0) {
-      $("#post_boxes").append("<img src='" + path + "' />");
-    } else {
-      $("#post_boxes").append("<a href='" + path + "' target='_blank'>" + path + "</a>");
-    }
-  }
 
   $(function(){
 
@@ -271,27 +265,34 @@ $(document).ready(function() {
                     filename: file.filename,
                     data: file.data,
                     content: content.content.value,
-                    status: content.status.value},
-                  success: uploadHandler
+                    status: content.status.value}
             });
+            files = [];
+            content.content.value = "";
+            content.uploaded_file.value = "";
+            $(content).parent().hide();
           });
-          $(content).parent().hide();
+
         } else if (post_msg >  2) {
           $(this).parents("#post_boxes").find(".error_message").hide();
           $(this).find("textarea").val("");
           $.post( "/posts", data);
           $(this).parent().hide();
+
         } else {
-          $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!");
+
+          $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").show();
+          $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").fadeOut(3000);
+
         }
         files = [];
         form.preventDefault();
       } else {
-        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.");
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").show();
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").fadeOut(3000);
 
       }
     });
-
   });
 
 

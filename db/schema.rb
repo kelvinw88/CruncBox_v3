@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140807163100) do
+ActiveRecord::Schema.define(version: 20140821102022) do
 
   create_table "comments", force: true do |t|
     t.integer  "post_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140807163100) do
     t.string   "file"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "filename"
   end
 
   create_table "votes", force: true do |t|

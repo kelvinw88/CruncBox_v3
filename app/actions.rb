@@ -30,29 +30,30 @@ end
 #Post message
 post '/posts' do
 
-    data = params[:data]
-    filename = params[:filename]
 
-    ## Decode the image
-    data_index = data.index('base64') + 7
-    filedata = data.slice(data_index, data.length)
-    decoded_image = Base64.decode64(filedata)
+  data = params[:data]
+  filename = params[:filename]
 
-    ## Write the file to the system
-    file = File.new("public/uploads/#{filename}", "w+")
-    file.write(decoded_image)
+  ## Decode the image
+  data_index = data.index('base64') + 7
+  filedata = data.slice(data_index, data.length)
+  decoded_image = Base64.decode64(filedata)
 
+  ## Write the file to the system
+  file = File.new("public/uploads/posts_img/#{filename}", "w+")
+  file.write(decoded_image)
 
 
 
   @post = Post.new(
   status: params[:status],
   content: params[:content],
-  file: params[:uploaded_file]
+  filename: params[:filename]
   )
 
+
   if @post.save
-    "/uploads/#{filename}"
+    @post.save
   else
     erb :'posts/new'
   end
