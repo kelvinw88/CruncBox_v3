@@ -65,8 +65,11 @@ post '/posts/upvote' do
     post_id: params[:post_id]
     )
     session[:voted] << params[:post_id]
+    @vote.to_json
+  else
+    erb :index
+    @vote.to_json
   end
-  redirect '/'
 end
 
 #Comment

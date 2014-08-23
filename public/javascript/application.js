@@ -282,17 +282,36 @@ $(document).ready(function() {
   $(".container").on("submit", ".vote", function(event){
     event.preventDefault();
     var data = $(this).serialize();
-    $.post( '/posts/upvote', data);
+    $.post( '/posts/upvote', data, function(vote){
+      debugger
+      var vote = jQuery.parseJSON(vote);
+      var post_id = vote.post_id;
+      var post = $('.item[data-id="' + post_id + '"]');
+      var total_vote = $(post).find('.post_vote').text()
+      var total_vote = Number($(post).find('.post_vote').text());
+      var total_vote = total_vote + 1;
+      $(post).find('.post_vote').text(total_vote);
+      var msnry = set_masonry_fn();        //RESET LAYOUT
+      msnry.layout();
+    });
   });
 
   //COMMENTS
   $(".container").on("submit", ".post_comment", function(event){
     event.preventDefault();
     var data = $(this).serialize();
-    $.post( '/posts/comment',data , function(json){
-      alert(json);
+    $.post( '/posts/comment',data , function(comment){
+      var comment = jQuery.parseJSON(comment);
+      var post_id = comment.post_id;
+      var post = $('.item[data-id="' + post_id + '"]');
+      $(post).find('.post_comment').append('<p>'+ comment.content +'</p>');
+      var msnry = set_masonry_fn();        //RESET LAYOUT
+      msnry.layout();
     });
   });
+
+
+
 
 
 
