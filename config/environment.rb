@@ -2,7 +2,8 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'active_support/all'
-require 'pry' if development?
+
+
 # Load Sinatra Framework (with AR)
 require 'sinatra'
 require 'sinatra/activerecord'
