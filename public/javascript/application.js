@@ -134,7 +134,7 @@ $(document).ready(function() {
   function sched_post() {
     setTimeout(function() {
       get_post();
-    }, 3000);
+    }, 1000);
   }
 
   //doesn't promt error message. can be submited mutiplue times
@@ -227,11 +227,83 @@ $(document).ready(function() {
     ,500);
   });
 
-  $(".post_box").find('input[type="submit"]').on("click",function(e){
-    e.preventDefault;
-    console.log("hit");
+
+  //POSTING
+
+  var files = [];
+  var content = null;
+
+  $(function(){
+    $(".uploaded_file").change(function(event) {
+
+      $.each(event.target.files, function(index, file) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          object = {};
+          object.filename = file.name;
+          object.data = event.target.result;
+          files.push(object);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    $(".post_box").submit(function(form) {
+      var file_type = this.uploaded_file.value.split(".")[1];
+      form.preventDefault();
+      content = this;
+      var data = $(this).serialize()
+      var post_msg = $(this).find('textarea').val().length;
+      var no_attachment = typeof file_type == 'undefined';
+      if (post_msg < 3){
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").show();
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").fadeOut(3000);
+
+      } else if (no_attachment && post_msg > 2){
+        $(this).parents("#post_boxes").find(".error_message").hide();
+        $(this).find("textarea").val("");
+        $.post( "/posts", data);
+        $(this).parent().hide();
+        console.log("without photo");
+
+      } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
+
+        $.each(files, function(index, file) {
+          $.ajax({url: "/posts",
+            type: 'POST',
+            data: {
+              filename: file.filename,
+              data: file.data,
+              content: content.content.value,
+              status: content.status.value}
+          });
+        });
+        files = [];
+        content.content.value = "";
+        content.uploaded_file.value = "";
+        $(content).parent().hide();
+        console.log("with photo");
+      } else {
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").show().fadeOut(3000);
+      }
+    });
   });
 
+  //VOTES
+  $(".container").on("submit", ".vote", function(event){
+    event.preventDefault();
+    var data = $(this).serialize();
+    $.post( '/posts/upvote', data);
+    
+  });
 
+  //COMMENTS
+  $(".container").on("submit", ".post_comment", function(event){
+    event.preventDefault();
+    var data = $(this).serialize();
+    $.post( '/posts/comment',data , function(json){
+      // alert(json);
+    });
+  });
 
 });
