@@ -139,6 +139,7 @@ $(document).ready(function() {
     }, 1000);
   }
   //get post
+
   get_post();
 
   //cick on logo
@@ -245,8 +246,7 @@ $(document).ready(function() {
       var post_msg = $(this).find('textarea').val().length;
       var no_attachment = typeof file_type == 'undefined';
       if (post_msg < 3){
-        $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").show();
-        $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").fadeOut(3000);
+        $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").show().fadeOut(3000);
 
       } else if (no_attachment && post_msg > 2){
         $(this).parents("#post_boxes").find(".error_message").hide();
@@ -283,11 +283,10 @@ $(document).ready(function() {
     event.preventDefault();
     var data = $(this).serialize();
     $.post( '/posts/upvote', data, function(vote){
-      debugger
+
       var vote = jQuery.parseJSON(vote);
       var post_id = vote.post_id;
       var post = $('.item[data-id="' + post_id + '"]');
-      var total_vote = $(post).find('.post_vote').text()
       var total_vote = Number($(post).find('.post_vote').text());
       var total_vote = total_vote + 1;
       $(post).find('.post_vote').text(total_vote);
