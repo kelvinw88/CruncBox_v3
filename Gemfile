@@ -23,6 +23,7 @@ gem 'neat'
 gem 'mini_magick'
 
 gem 'json'
+
 group :development, :test do
   gem 'pry'
   gem 'shotgun'
