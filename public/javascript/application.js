@@ -294,7 +294,7 @@ $(document).ready(function() {
     event.preventDefault();
     var data = $(this).serialize();
     $.post( '/posts/upvote', data);
-    
+
   });
 
   //COMMENTS
