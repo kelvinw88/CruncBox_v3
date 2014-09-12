@@ -58,10 +58,10 @@ $(document).ready(function() {
             speed, easing, callback);
   };
 
-  function remove_post(){
+  function remove_post(new_posts,old_posts){
     var onlyInOld = old_posts.filter(function(old_post){
         return new_posts.filter(function(new_post){
-            return new_post.id == old_post.id && old_post.updated_at == new_post.updated_at
+            return (new_post.id == old_post.id) && (new_post.updated_at == old_post.updated_at)
         }).length == 0
     });
     for (num in onlyInOld){
@@ -69,10 +69,10 @@ $(document).ready(function() {
     }
   };
 
-  function add_post(){
+  function add_post(new_posts,old_posts){
     var onlyInNew = new_posts.filter(function(new_post){
         return old_posts.filter(function(old_post){
-            return old_post.id == new_post.id && old_post.updated_at == new_post.updated_at
+            return (old_post.id == new_post.id) && (new_post.updated_at == old_post.updated_at)
         }).length == 0
     });
     var context = {posts: onlyInNew};
@@ -107,27 +107,29 @@ $(document).ready(function() {
 
   var source = $("#post-template").html();
   var template = Handlebars.compile(source);
-
+  var old_posts = null;
 
   function get_post(){
     $.getJSON( "api/alive", function( posts ) {
-    if (typeof old_posts != 'undefined') {
+    if (old_posts != null) {
       var new_posts = posts;
-      add_post();         //NEW POST
-      remove_post();         //REMOVE OLD POST
+      remove_post(new_posts,old_posts);         //REMOVE OLD POST
+      add_post(new_posts,old_posts);         //NEW POST
+
       var msnry = set_masonry_fn();        //RESET LAYOUT
       msnry.layout();
+      console.log('in');
     } else {
       var context = {posts: posts};
       html = template(context);
       $(".grid").html(html);
-      sched_post();
       set_masonry_fn();
       masonry_no_animation_fn();
       enter_disable_fn();
+      console.log('out');
     }
-    var old_posts = posts;
-
+    old_posts = posts;
+    sched_post();
     })
   };
 
@@ -138,6 +140,7 @@ $(document).ready(function() {
     }, 5000);
   }
 
+
   //doesn't promt error message. can be submited mutiplue times
   function validateForm() {
     var x = $('.message_box[name="content"]');
@@ -146,7 +149,6 @@ $(document).ready(function() {
         return false;
     }
   }
-
 
 
 
@@ -294,9 +296,17 @@ $(document).ready(function() {
   $(".container").on("submit", ".vote", function(event){
     event.preventDefault();
     var data = $(this).serialize();
-    $.post( '/posts/upvote', data);
-
-
+    $.post( '/posts/upvote', data, function(vote){
+      // var vote = jQuery.parseJSON(vote);
+      // var post_id = vote.post_id;
+      // var post = $('.item[data-id="' + post_id + '"]');
+      // var total_vote = $(post).find('.post_vote').text()
+      // total_vote = Number($(post).find('.post_vote').text());
+      // total_vote = total_vote + 1;
+      // $(post).find('.post_vote').text(total_vote);
+      // var msnry = set_masonry_fn();        //RESET LAYOUT
+      // msnry.layout();
+    });
   });
 
   //COMMENTS
