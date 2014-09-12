@@ -61,7 +61,7 @@ $(document).ready(function() {
   function remove_post(){
     var onlyInOld = old_posts.filter(function(old_post){
         return new_posts.filter(function(new_post){
-            return new_post.id == old_post.id
+            return new_post.id == old_post.id && old_post.updated_at == new_post.updated_at
         }).length == 0
     });
     for (num in onlyInOld){
@@ -72,7 +72,7 @@ $(document).ready(function() {
   function add_post(){
     var onlyInNew = new_posts.filter(function(new_post){
         return old_posts.filter(function(old_post){
-            return old_post.id == new_post.id
+            return old_post.id == new_post.id && old_post.updated_at == new_post.updated_at
         }).length == 0
     });
     var context = {posts: onlyInNew};
@@ -134,7 +134,8 @@ $(document).ready(function() {
   function sched_post() {
     setTimeout(function() {
       get_post();
-    }, 1000);
+
+    }, 5000);
   }
 
   //doesn't promt error message. can be submited mutiplue times
@@ -294,6 +295,7 @@ $(document).ready(function() {
     event.preventDefault();
     var data = $(this).serialize();
     $.post( '/posts/upvote', data);
+
 
   });
 
