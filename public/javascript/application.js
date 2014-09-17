@@ -300,48 +300,14 @@ $(document).ready(function() {
     var data = $(this).serialize();
     var clicked_post = this;
     var clicked_post_id = $(this).parent().data().id;
-
-
-    function add_vote_count(can_vote){
-
-        if (can_vote == true){ $(clicked_post).parent().find('.post_vote').text(parseInt($(clicked_post).parent().find('.post_vote').text())+1)}
-    };
-
-    function vote_check(voted_posts,clicked_post,add_vote_count) {
-      var can_vote = false;
-      var done = false;
-      for (var i = 0; i < voted_posts.length; i++) {
-        if (voted_posts != clicked_post_id) {
-          can_vote = true;
-          voted_posts.push(clicked_post_id);
-        }else {
-          can_vote = false;
-        }
-      }
-      
-
-
-      add_vote_count(can_vote);
-    };
-
-    vote_check(voted_posts,clicked_post,add_vote_count);
-
-
-
-
-
-
+    if (voted_posts.indexOf(clicked_post_id) == -1){
+    $(clicked_post).parent().find('.post_vote').text(parseInt($(clicked_post).parent().find('.post_vote').text())+1);
+    voted_posts.push(clicked_post_id);
     $.post( '/posts/upvote', data, function(vote){
-      // var vote = jQuery.parseJSON(vote);
-      // var post_id = vote.post_id;
-      // var post = $('.item[data-id="' + post_id + '"]');
-      // var total_vote = $(post).find('.post_vote').text()
-      // total_vote = Number($(post).find('.post_vote').text());
-      // total_vote = total_vote + 1;
-      // $(post).find('.post_vote').text(total_vote);
-      // var msnry = set_masonry_fn();        //RESET LAYOUT
-      // msnry.layout();
     });
+    }
+
+
   });
 
   //COMMENTS
