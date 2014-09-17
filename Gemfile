@@ -24,12 +24,12 @@ gem 'mini_magick'
 
 gem 'json'
 
-#group :development, :test do
+group :development, :test do
   gem 'pry'
   gem 'shotgun'
   gem 'sqlite3'
-#end
+end
 
-#group :production do
+group :production do
   gem 'pg'
-#end
+end
