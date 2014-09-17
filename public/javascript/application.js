@@ -270,7 +270,10 @@ $(document).ready(function() {
 
         console.log("without photo");
       } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
+        console.log("with photo");
+
         $.each(files, function(index, file) {
+          console.log(files);
           $.ajax({url: "/posts",
             type: 'POST',
             data: {
