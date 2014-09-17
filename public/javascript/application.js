@@ -232,13 +232,11 @@ $(document).ready(function() {
 
 
   //POSTING
-
   var files = [];
   var content = null;
 
   $(function(){
     $(".uploaded_file").change(function(event) {
-
       $.each(event.target.files, function(index, file) {
         var reader = new FileReader();
         reader.onload = function(event) {
@@ -259,9 +257,8 @@ $(document).ready(function() {
       var post_msg = $(this).find('textarea').val().length;
       var no_attachment = typeof file_type == 'undefined';
       if (post_msg < 3){
-        $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").show();
-        $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").fadeOut(3000);
-
+        $(this).parents("#post_boxes").prepend("<h1 class='error_message'>Yo, Say something!</h1>");
+        $('.error_message').fadeIn(1000).delay(2000).fadeOut(1000);
       } else if (no_attachment && post_msg > 2){
         $(this).parents("#post_boxes").find(".error_message").hide();
         $(this).find("textarea").val("");
@@ -270,7 +267,6 @@ $(document).ready(function() {
         console.log("without photo");
 
       } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
-
         $.each(files, function(index, file) {
           $.ajax({url: "/posts",
             type: 'POST',
@@ -287,7 +283,8 @@ $(document).ready(function() {
         $(content).parent().hide();
         console.log("with photo");
       } else {
-        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").show().fadeOut(3000);
+        $(this).parents("#post_boxes").prepend("<h1 class='error_message'>Yo, we accept images only.</h1>");
+        $('.error_message').fadeIn(1000).delay(2000).fadeOut(1000);
       }
     });
   });
@@ -295,7 +292,6 @@ $(document).ready(function() {
   //VOTES
   var voted_posts = [];
   $(".container").on("submit", ".vote", function(event){
-
     event.preventDefault();
     var data = $(this).serialize();
     var clicked_post = this;
@@ -303,20 +299,21 @@ $(document).ready(function() {
     if (voted_posts.indexOf(clicked_post_id) == -1){
     $(clicked_post).parent().find('.post_vote').text(parseInt($(clicked_post).parent().find('.post_vote').text())+1);
     voted_posts.push(clicked_post_id);
-    $.post( '/posts/upvote', data, function(vote){
-    });
+    $.post( '/posts/upvote', data, function(vote){});
     }
-
-
   });
 
   //COMMENTS
   $(".container").on("submit", ".post_comment", function(event){
     event.preventDefault();
     var data = $(this).serialize();
-    $.post( '/posts/comment',data , function(json){
-      // alert(json);
-    });
+    var commented_post = this;
+    var input = $(commented_post).find('textarea').val();
+    $(this).parent().append("<p>" + input + "</p>")
+    $.post( '/posts/comment',data , function(json){});
+    $(commented_post).find('textarea').val("");
+    var msnry = set_masonry_fn();        //RESET LAYOUT
+    msnry.layout();
   });
 
 
