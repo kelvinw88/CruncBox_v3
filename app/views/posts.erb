@@ -9,11 +9,11 @@
       </form>
 
       <p class="post_vote">{{votes.length}}</p>
-
+        {{#if filename}}
           <a href = "/posts/{{id}}/show">
-              <p><img src="/uploads/posts_img/yABCrE.gif" ></p>
+              <p><img src="/uploads/posts_img/{{filename}}" ></p>
           </a>
-
+        {{/if}}
 
         <p class="post_msg">{{content}}</p>
         <p><small>{{fulldate created_at}}</small></p>
