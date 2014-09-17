@@ -137,7 +137,7 @@ $(document).ready(function() {
     setTimeout(function() {
       get_post();
 
-    }, 5000);
+    }, 1000);
   }
 
 
