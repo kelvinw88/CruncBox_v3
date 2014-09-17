@@ -260,12 +260,15 @@ $(document).ready(function() {
         $(this).parents("#post_boxes").prepend("<h1 class='error_message'>Yo, Say something!</h1>");
         $('.error_message').fadeIn(1000).delay(2000).fadeOut(1000);
       } else if (no_attachment && post_msg > 2){
-        $(this).parents("#post_boxes").find(".error_message").hide();
         $(this).find("textarea").val("");
-        $.post( "/posts", data);
         $(this).parent().hide();
-        console.log("without photo");
+        debugger
 
+        $.post( "/posts", data);
+
+
+
+        console.log("without photo");
       } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
         $.each(files, function(index, file) {
           $.ajax({url: "/posts",
@@ -281,7 +284,7 @@ $(document).ready(function() {
         content.content.value = "";
         content.uploaded_file.value = "";
         $(content).parent().hide();
-        console.log("with photo");
+
       } else {
         $(this).parents("#post_boxes").prepend("<h1 class='error_message'>Yo, we accept images only.</h1>");
         $('.error_message').fadeIn(1000).delay(2000).fadeOut(1000);
