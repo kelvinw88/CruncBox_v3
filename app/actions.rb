@@ -4,15 +4,6 @@ get '/' do
   erb :index
 end
 
-#Sort
-# get '/:status' do
-#   @posts = Post.send "#{params[:status]}"
-#   @posts.to_json
-#   erb :index
-# end
-
-
-#Sort
 get '/api/:status' do
   @posts = Post.send "#{params[:status]}"
   @posts.to_json(:include => [:votes, :comments])
@@ -27,7 +18,6 @@ end
 
 #Post message
 post '/posts' do
-
   @post = Post.new(
   status: params[:status],
   content: params[:content],

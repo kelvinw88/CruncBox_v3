@@ -10,7 +10,7 @@ configure do
       database: "db/db.sqlite3"
     }
   end
-  
+
   # if development?
   #   set :database, {
   #     adapter: "sqlite3",
