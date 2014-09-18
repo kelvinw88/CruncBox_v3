@@ -113,6 +113,7 @@ $(document).ready(function() {
     $.getJSON( "api/alive", function( posts ) {
     if (old_posts != null) {
       var new_posts = posts;
+      debugger
       remove_post(new_posts,old_posts);         //REMOVE OLD POST
       add_post(new_posts,old_posts);         //NEW POST
 
@@ -262,8 +263,6 @@ $(document).ready(function() {
       } else if (no_attachment && post_msg > 2){
         $(this).find("textarea").val("");
         $(this).parent().hide();
-        debugger
-
         $.post( "/posts", data);
 
 
@@ -271,7 +270,6 @@ $(document).ready(function() {
         console.log("without photo");
       } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
         console.log("with photo");
-
         $.each(files, function(index, file) {
           console.log(files);
           $.ajax({url: "/posts",
