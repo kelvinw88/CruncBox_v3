@@ -1,4 +1,5 @@
 class Uploader < CarrierWave::Uploader::Base
+  # storage :file
 
   include CarrierWave::MiniMagick
 

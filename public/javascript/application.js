@@ -113,7 +113,7 @@ $(document).ready(function() {
     $.getJSON( "api/alive", function( posts ) {
     if (old_posts != null) {
       var new_posts = posts;
-      debugger
+      
       remove_post(new_posts,old_posts);         //REMOVE OLD POST
       add_post(new_posts,old_posts);         //NEW POST
 
