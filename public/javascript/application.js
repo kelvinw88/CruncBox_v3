@@ -113,7 +113,7 @@ $(document).ready(function() {
     $.getJSON( "api/alive", function( posts ) {
     if (old_posts != null) {
       var new_posts = posts;
-      
+
       remove_post(new_posts,old_posts);         //REMOVE OLD POST
       add_post(new_posts,old_posts);         //NEW POST
 
@@ -238,12 +238,14 @@ $(document).ready(function() {
 
   $(function(){
     $(".uploaded_file").change(function(event) {
+      console.log("Test");
       $.each(event.target.files, function(index, file) {
         var reader = new FileReader();
         reader.onload = function(event) {
           object = {};
           object.filename = file.name;
           object.data = event.target.result;
+          
           files.push(object);
         };
         reader.readAsDataURL(file);
@@ -269,9 +271,10 @@ $(document).ready(function() {
 
         console.log("without photo");
       } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
-        console.log("with photo");
+
+        console.log(files);
         $.each(files, function(index, file) {
-          console.log(files);
+
           $.ajax({url: "/posts",
             type: 'POST',
             data: {
@@ -285,6 +288,7 @@ $(document).ready(function() {
         content.content.value = "";
         content.uploaded_file.value = "";
         $(content).parent().hide();
+
 
       } else {
         $(this).parents("#post_boxes").prepend("<h1 class='error_message'>Yo, we accept images only.</h1>");

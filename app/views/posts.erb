@@ -8,17 +8,19 @@
       </form>
 
       <p class="post_vote">{{votes.length}}</p>
+
         {{#if file.url}}
           <a href = "/posts/{{id}}/show">
-              <p><img src="{{file.url}}" ></p>
+              <p><img src="/uploads/posts_img/{{file.url}}" ></p>
           </a>
         {{/if}}
+
 
         <p><a class="post_msg"href="/posts/{{id}}/show">{{content}}</a></p>
         <p><small>{{fulldate created_at}}</small></p>
 
 
-        <form class="post_comment"method="post" action="/posts/comment" onsubmit="return validateForm()">
+        <form class="post_comment"method="post" action="/posts/comment">
           <textarea class="message_box" type="text" name="content" value="" maxlength="144"></textarea>
           <input type="hidden" name="post_id" value="{{id}}">
           <input type="submit" value="submit">
