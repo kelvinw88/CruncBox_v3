@@ -57,28 +57,29 @@ $(document).ready(function() {
       speed, easing, callback);
   };
 
-  function add_post(new_posts,old_posts){
-    var onlyInNew = new_posts.filter(function(new_post){
-        return old_posts.filter(function(old_post){
-            return old_post.id == new_post.id && old_post.updated_at == new_post.updated_at
-        }).length == 0
-    });
-    var context = {posts: onlyInNew};
-    html = template(context);
-    $('.grid').prepend(html);
-
-  };
 
   function remove_post(new_posts,old_posts){
     var onlyInOld = old_posts.filter(function(old_post){
         return new_posts.filter(function(new_post){
-            return new_post.id == old_post.id && old_post.updated_at == new_post.updated_at
+            return (new_post.id == old_post.id) && (new_post.updated_at == old_post.updated_at)
         }).length == 0
     });
     for (num in onlyInOld){
       $(".grid").find("[data-id='" + onlyInOld[num].id + "']").remove();
     }
   };
+
+
+  function add_post(new_posts,old_posts){
+    var onlyInNew = new_posts.filter(function(new_post){
+        return old_posts.filter(function(old_post){
+            return (old_post.id == new_post.id) && (new_post.updated_at == old_post.updated_at)
+        }).length == 0
+    });
+    var context = {posts: onlyInNew};
+    html = template(context);
+    $('.grid').prepend(html);
+  }
 
 
 
@@ -107,18 +108,16 @@ $(document).ready(function() {
 
   var source = $("#post-template").html();
   var template = Handlebars.compile(source);
-  var old_posts = "";
-  var new_posts = "";
-
-
+  var old_posts = null;
   function get_post(){
     $.getJSON( "api/alive", function( posts ) {
-    if (old_posts != "") {
-      new_posts = posts;
+    if (old_posts != null) {
+      var new_posts = posts;
       remove_post(new_posts,old_posts);         //REMOVE OLD POST
       add_post(new_posts,old_posts);         //NEW POST
       var msnry = set_masonry_fn();        //RESET LAYOUT
       msnry.layout();
+
     } else {
       var context = {posts: posts};
       html = template(context);
@@ -127,7 +126,6 @@ $(document).ready(function() {
       masonry_no_animation_fn();
       enter_disable_fn();
     }
-
     old_posts = posts;
     sched_post();
     })
@@ -138,6 +136,17 @@ $(document).ready(function() {
       get_post();
     }, 1000);
   }
+
+
+  //doesn't promt error message. can be submited mutiplue times
+  function validateForm() {
+    var x = $('.message_box[name="content"]');
+    if (x >= 4) {
+        alert("Must be Longer than 3 char");
+        return false;
+    }
+  }
+
   //get post
 
   get_post();
@@ -220,12 +229,12 @@ $(document).ready(function() {
 
   //POSTING
 
+
   var files = [];
   var content = null;
 
   $(function(){
     $(".uploaded_file").change(function(event) {
-
       $.each(event.target.files, function(index, file) {
         var reader = new FileReader();
         reader.onload = function(event) {
@@ -246,15 +255,13 @@ $(document).ready(function() {
       var post_msg = $(this).find('textarea').val().length;
       var no_attachment = typeof file_type == 'undefined';
       if (post_msg < 3){
-        $(this).parents("#post_boxes").find(".error_message").text("Yo man, Say something!").show().fadeOut(3000);
-
+        $(this).parents("#post_boxes").prepend("<h1 class='error_message'>Yo, Say something!</h1>");
+        $('.error_message').fadeIn(1000).delay(2000).fadeOut(1000);
       } else if (no_attachment && post_msg > 2){
-        $(this).parents("#post_boxes").find(".error_message").hide();
         $(this).find("textarea").val("");
-        $.post( "/posts", data);
         $(this).parent().hide();
+        $.post( "/posts", data);
         console.log("without photo");
-
       } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
 
         $.each(files, function(index, file) {
@@ -273,41 +280,42 @@ $(document).ready(function() {
         $(content).parent().hide();
         console.log("with photo");
       } else {
-        $(this).parents("#post_boxes").find(".error_message").text("Yo man, we accept images only.").show().fadeOut(3000);
+
+        $(this).parents("#post_boxes").prepend("<h1 class='error_message'>Yo, we accept images only.</h1>");
+        $('.error_message').fadeIn(1000).delay(2000).fadeOut(1000);
+
       }
     });
   });
 
   //VOTES
+
+  var voted_posts = [];
   $(".container").on("submit", ".vote", function(event){
     event.preventDefault();
     var data = $(this).serialize();
-    $.post( '/posts/upvote', data, function(vote){
-
-      var vote = jQuery.parseJSON(vote);
-      var post_id = vote.post_id;
-      var post = $('.item[data-id="' + post_id + '"]');
-      var total_vote = Number($(post).find('.post_vote').text());
-      var total_vote = total_vote + 1;
-      $(post).find('.post_vote').text(total_vote);
-      var msnry = set_masonry_fn();        //RESET LAYOUT
-      msnry.layout();
-    });
+    var clicked_post = this;
+    var clicked_post_id = $(this).parent().data().id;
+    if (voted_posts.indexOf(clicked_post_id) == -1){
+    $(clicked_post).parent().find('.post_vote').text(parseInt($(clicked_post).parent().find('.post_vote').text())+1);
+    voted_posts.push(clicked_post_id);
+    $.post( '/posts/upvote', data, function(vote){});
+    }
   });
 
   //COMMENTS
   $(".container").on("submit", ".post_comment", function(event){
     event.preventDefault();
     var data = $(this).serialize();
-    $.post( '/posts/comment',data , function(comment){
-      var comment = jQuery.parseJSON(comment);
-      var post_id = comment.post_id;
-      var post = $('.item[data-id="' + post_id + '"]');
-      $(post).find('.post_comment').append('<p>'+ comment.content +'</p>');
-      var msnry = set_masonry_fn();        //RESET LAYOUT
-      msnry.layout();
-    });
+    var commented_post = this;
+    var input = $(commented_post).find('textarea').val();
+    $(this).parent().append("<p>" + input + "</p>")
+    $.post( '/posts/comment',data , function(json){});
+    $(commented_post).find('textarea').val("");
+    var msnry = set_masonry_fn();        //RESET LAYOUT
+    msnry.layout();
   });
+
 
 
 

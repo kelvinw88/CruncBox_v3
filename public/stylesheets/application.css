@@ -88,6 +88,13 @@ header nav ul li p{
 
 }
 
+.error_message{
+  margin:0 auto;
+  text-align: center;
+  display:none;
+  color:red;
+}
+
 #drunk_nav{
   color:white;
   cursor: default;

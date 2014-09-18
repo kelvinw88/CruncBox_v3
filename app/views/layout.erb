@@ -81,8 +81,10 @@
     <section id= "post_boxes">
       <h3 class="error_message"></h3>
 
+
+
       <div class="center_wrap drunk ">
-        <form class= "post_box"  method="post" action="/posts" enctype="multipart/form-data" >
+        <form class= "post_box" method="post" action="/posts" enctype="multipart/form-data">
           <textarea type="text" name="content" value="" maxlength="144"></textarea>
           <input type="hidden" name="status" value="drunk">
           <input type="file" name="uploaded_file" class="uploaded_file">
@@ -91,7 +93,7 @@
       </div>
 
       <div class="center_wrap sober ">
-        <form class= "post_box"  method="post" action="/posts" enctype="multipart/form-data" >
+        <form class= "post_box" method="post" action="/posts" enctype="multipart/form-data">
           <textarea type="text" name="content" value="" maxlength="144"></textarea>
           <input type="hidden" name="status" value="sober">
           <input type="file" name="uploaded_file" class="uploaded_file">
@@ -100,14 +102,15 @@
       </div>
 
       <div class="center_wrap high ">
-        <form class= "post_box"  method="post" action="/posts" enctype="multipart/form-data" >
+        <form class= "post_box" method="post" action="/posts" enctype="multipart/form-data">
           <textarea type="text" name="content" value="" maxlength="144"></textarea>
           <input type="hidden" name="status" value="high">
           <input type="file" name="uploaded_file" class="uploaded_file">
           <input type="submit" value="SUBMIT" id="sub">
         </form>
       </div>
-    </section>
+    </div>
+
 
     <div class="container">
       <div class="row">
