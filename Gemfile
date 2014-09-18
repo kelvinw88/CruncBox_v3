@@ -24,7 +24,7 @@ gem 'mini_magick'
 
 gem 'json'
 
-gem 'pry'
+
 gem 'shotgun'
 
 group :development, :test do
