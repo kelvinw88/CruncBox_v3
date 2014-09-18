@@ -9,10 +9,10 @@ class Post < ActiveRecord::Base
   validates :content, presence: true, length: { in: 3..144 }
 
 
-  # @life = 3*3600 #in hours
+  @life = 3*3600 #in hours
 
 
-  @life = 900 #in sec
+  # @life = 900 #in sec
 
 
 
