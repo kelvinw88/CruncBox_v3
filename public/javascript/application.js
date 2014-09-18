@@ -245,7 +245,7 @@ $(document).ready(function() {
           object = {};
           object.filename = file.name;
           object.data = event.target.result;
-          
+
           files.push(object);
         };
         reader.readAsDataURL(file);
@@ -271,10 +271,7 @@ $(document).ready(function() {
 
         console.log("without photo");
       } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
-
-        console.log(files);
         $.each(files, function(index, file) {
-
           $.ajax({url: "/posts",
             type: 'POST',
             data: {
@@ -288,8 +285,7 @@ $(document).ready(function() {
         content.content.value = "";
         content.uploaded_file.value = "";
         $(content).parent().hide();
-
-
+        console.log("with photo");
       } else {
         $(this).parents("#post_boxes").prepend("<h1 class='error_message'>Yo, we accept images only.</h1>");
         $('.error_message').fadeIn(1000).delay(2000).fadeOut(1000);
