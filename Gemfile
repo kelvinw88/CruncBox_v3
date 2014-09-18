@@ -27,10 +27,10 @@ gem 'json'
 
 gem 'shotgun'
 
-group :development, :test do
+# group :development, :test do
   gem 'sqlite3'
-end
+# end
 
-group :production do
+# group :production do
   gem 'pg'
-end
+# end

@@ -1,5 +1,5 @@
 require './config/environment.rb'
-require 'pry'
+
 describe Post do
 
   before(:each) do

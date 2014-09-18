@@ -1,4 +1,3 @@
-require 'pry'
 # Homepage (Root path)
 
 get '/' do

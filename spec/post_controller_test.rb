@@ -1,6 +1,5 @@
 
 require './config/environment.rb'
-require 'pry'
 require 'rack/test'
 
 
