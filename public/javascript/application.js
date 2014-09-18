@@ -113,13 +113,11 @@ $(document).ready(function() {
     $.getJSON( "api/alive", function( posts ) {
     if (old_posts != null) {
       var new_posts = posts;
-
       remove_post(new_posts,old_posts);         //REMOVE OLD POST
       add_post(new_posts,old_posts);         //NEW POST
-
       var msnry = set_masonry_fn();        //RESET LAYOUT
       msnry.layout();
-      console.log('in');
+
     } else {
       var context = {posts: posts};
       html = template(context);
@@ -127,7 +125,6 @@ $(document).ready(function() {
       set_masonry_fn();
       masonry_no_animation_fn();
       enter_disable_fn();
-      console.log('out');
     }
     old_posts = posts;
     sched_post();
@@ -238,14 +235,14 @@ $(document).ready(function() {
 
   $(function(){
     $(".uploaded_file").change(function(event) {
-      console.log("Test");
       $.each(event.target.files, function(index, file) {
         var reader = new FileReader();
         reader.onload = function(event) {
+
           object = {};
           object.filename = file.name;
           object.data = event.target.result;
-
+          
           files.push(object);
         };
         reader.readAsDataURL(file);
@@ -266,11 +263,9 @@ $(document).ready(function() {
         $(this).find("textarea").val("");
         $(this).parent().hide();
         $.post( "/posts", data);
-
-
-
         console.log("without photo");
       } else if ( no_attachment || ["jpg", "png", "gif"].indexOf(file_type.toLowerCase()) > 0 )   {
+
         $.each(files, function(index, file) {
           $.ajax({url: "/posts",
             type: 'POST',

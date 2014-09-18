@@ -21,7 +21,7 @@ require 'carrierwave/orm/activerecord'
 # require "sinatra/reloader"
 
 require 'json'
-
+require 'pry'
 
 
 
